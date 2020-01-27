@@ -1,0 +1,55 @@
+import tkinter as tk
+import Gateway as gt
+from tkinter import messagebox
+
+
+class SettingsPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Settings:", font=controller.title_font)
+        label.grid(row=1, column=1, pady=3, padx=10, sticky=tk.W)
+        self.config = gt.load_config()
+
+        # Add AMI
+        ami_label = tk.Label(self, text="AMI")
+        ami_label.grid(row=2, column=1, sticky=tk.W, padx=10)
+        self.ami_entry = tk.Entry(self, width=20, font="none 12 bold", highlightthickness=0)
+        self.ami_entry.grid(row=3, column=1, padx=10, sticky=tk.W)
+
+        # Add VM Type
+        vm_type_label = tk.Label(self, text="VM Type")
+        vm_type_label.grid(row=2, column=2, sticky=tk.W, padx=10)
+        self.vm_type_entry = tk.Entry(self, width=20, font="none 12 bold", highlightthickness=0)
+        self.vm_type_entry.grid(row=3, column=2, padx=10, sticky=tk.W)
+
+        # Add Key Name
+        key_label = tk.Label(self, text="Key Name")
+        key_label.grid(row=4, column=1, sticky=tk.W, padx=10)
+        self.key_entry = tk.Entry(self, width=20, font="none 12 bold", highlightthickness=0)
+        self.key_entry.grid(row=5, column=1, padx=10, sticky=tk.W)
+
+        # Add Security Group
+        group_label = tk.Label(self, text="Security Group")
+        group_label.grid(row=4, column=2, sticky=tk.W, padx=10)
+        self.group_entry = tk.Entry(self, width=20, font="none 12 bold", highlightthickness=0)
+        self.group_entry.grid(row=5, column=2, padx=10, sticky=tk.W)
+
+        # Save and Cancel Button
+        settings_buttons = tk.Frame(self)
+        settings_buttons.grid(row=6, column=2, sticky=tk.E, padx=10, pady=10)
+        self.save_button = tk.Button(settings_buttons, text="Save", command=lambda: self.save_settings())
+        self.cancel_button = tk.Button(settings_buttons, text="Cancel", command=lambda: self.controller.show_frame("TeacherPage"))
+        self.save_button.pack(side=tk.LEFT)
+        self.cancel_button.pack(side=tk.LEFT)
+
+    def save_settings(self):
+        self.config["AMI"] = self.ami_entry.get()
+        self.config["key_name"] = self.key_entry.get()
+        self.config["instance_type"] = self.vm_type_entry.get()
+        self.config["security_group_id"] = self.group_entry.get()
+        gt.save_config(self.config)
+        self.controller.show_frame("TeacherPage")
+
+
