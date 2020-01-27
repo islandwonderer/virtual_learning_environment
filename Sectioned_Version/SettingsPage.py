@@ -40,16 +40,32 @@ class SettingsPage(tk.Frame):
         settings_buttons = tk.Frame(self)
         settings_buttons.grid(row=6, column=2, sticky=tk.E, padx=10, pady=10)
         self.save_button = tk.Button(settings_buttons, text="Save", command=lambda: self.save_settings())
-        self.cancel_button = tk.Button(settings_buttons, text="Cancel", command=lambda: self.controller.show_frame("TeacherPage"))
+        self.cancel_button = tk.Button(settings_buttons, text="Cancel", command=lambda: self.cancel_warning())
         self.save_button.pack(side=tk.LEFT)
         self.cancel_button.pack(side=tk.LEFT)
 
+        # Loads Current Settings
+        self.load_settings()
+
     def save_settings(self):
         self.config["AMI"] = self.ami_entry.get()
-        self.config["key_name"] = self.key_entry.get()
         self.config["instance_type"] = self.vm_type_entry.get()
+        self.config["key_name"] = self.key_entry.get()
         self.config["security_group_id"] = self.group_entry.get()
         gt.save_config(self.config)
         self.controller.show_frame("TeacherPage")
+
+    def load_settings(self):
+        self.ami_entry.insert(0, self.config["AMI"])
+        self.vm_type_entry.insert(0, self.config["instance_type"])
+        self.key_entry.insert(0, self.config["key_name"])
+        self.group_entry.insert(0, self.config["security_group_id"])
+
+    def cancel_warning(self):
+        result = messagebox.askokcancel("Warning", "Do you want to continue? Any changes to these settings will be lost.")
+        if result is True:
+            self.controller.show_frame("TeacherPage")
+        else:
+            return
 
 
