@@ -58,15 +58,15 @@ class SettingsPage(tk.Frame):
 
         # Add sMTP
         smtp_label = tk.Label(self, text="SMTP")
-        smtp_label.grid(row=10, column=2, sticky=tk.W, padx=10)
+        smtp_label.grid(row=10, column=1, sticky=tk.W, padx=10)
         self.smtp_entry = tk.Entry(self, width=22, font="none 12 bold", highlightthickness=0)
-        self.smtp_entry.grid(row=11, column=2, padx=10, sticky=tk.W)
+        self.smtp_entry.grid(row=11, column=1, padx=10, sticky=tk.W)
 
         # Add Port
         port_label = tk.Label(self, text="Port")
-        port_label.grid(row=10, column=1, sticky=tk.W, padx=10)
+        port_label.grid(row=10, column=2, sticky=tk.W, padx=10)
         self.port_entry = tk.Entry(self, width=22, font="none 12 bold", highlightthickness=0)
-        self.port_entry.grid(row=11, column=1, padx=10, sticky=tk.W)
+        self.port_entry.grid(row=11, column=2, padx=10, sticky=tk.W)
 
         # Save and Cancel Button
         settings_buttons = tk.Frame(self)
