@@ -87,7 +87,7 @@ class SettingsPage(tk.Frame):
         self.config["email"] = self.email_entry.get()
         self.config["e_password"] = self.password_entry.get()
         self.config["smtp"] = self.smtp_entry.get()
-        self.config["port"] = self.port_entry.get()
+        self.config["port"] = int(self.port_entry.get())
         gt.save_config(self.config)
         self.controller.show_frame("TeacherPage")
 

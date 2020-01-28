@@ -8,10 +8,10 @@ import datetime as dt
 import bcrypt
 
 # Setup
-default_password = "Capstone2019"
-default_address = "testgrpython@gmail.com"
-default_smtp = "smtp.gmail.com"
-default_port = 587
+default_password = ""
+default_address = ""
+default_smtp = ""
+default_port = ""
 
 gateway_ses = Session()
 
@@ -111,7 +111,17 @@ def del_user(user):
     gateway_ses.commit()
 
 
+def load_email_info():
+    global default_address, default_password, default_smtp, default_port
+    config = load_config()
+    default_address = config["email"]
+    default_password = config["e_password"]
+    default_smtp = config["smtp"]
+    default_port = config["port"]
+
+
 def notify_user(user, message, subject):
+    load_email_info()
     e_mail = smtplib.SMTP(host=default_smtp, port=default_port)
     msg = MIMEMultipart()
     msg['From'] = default_address
@@ -130,4 +140,3 @@ def notify_user(user, message, subject):
         return "Fail"
     e_mail.quit()
     del msg
-
