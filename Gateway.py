@@ -7,7 +7,6 @@ import json
 import datetime as dt
 import bcrypt
 
-
 # Setup
 default_password = "Capstone2019"
 default_address = "testgrpython@gmail.com"
