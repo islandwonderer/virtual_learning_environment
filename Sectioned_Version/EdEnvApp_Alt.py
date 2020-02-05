@@ -36,10 +36,10 @@ class EdEnvApp(tk.Tk):
         # self.show_frame("LoginPage")
         # self.show_frame("TeacherPage")
         # self.show_frame("StudentPage")
-        # self.show_frame("UserManagementPage")
+        self.show_frame("UserManagementPage")
         # self.show_frame("GuestManagementPage")
         # self.show_frame("VMManagementPage")
-        self.show_frame("SettingsPage")
+        # self.show_frame("SettingsPage")
 
     def show_frame(self, page_name):
         # Show a frame for the given page name

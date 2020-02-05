@@ -13,6 +13,8 @@ class UserManagementPage(tk.Frame):
         top_label = tk.Label(self, text="User Management:", font=controller.title_font)
         top_label.grid(row=1, column=1, pady=5, padx=10, sticky=tk.W)
 
+        self.selected_user = None
+
         # Users List
         users_label = tk.Label(self, text="Users")
         users_label.grid(row=2, column=1, padx=10, sticky=tk.W)
@@ -62,8 +64,8 @@ class UserManagementPage(tk.Frame):
         self.web_site.bind("<Button-1>", lambda e: self.open_site())
         user_opt_frame = tk.Frame(self)
         user_opt_frame.grid(row=15, column=2, sticky=tk.NSEW, padx=10)
-        self.upd_button = tk.Button(user_opt_frame, text="Update", command=lambda: self.update_user())
-        self.del_button = tk.Button(user_opt_frame, text="Delete", command=lambda: self.delete_user())
+        self.upd_button = tk.Button(user_opt_frame, text="Update", command=lambda: self.update_user(), state=tk.DISABLED)
+        self.del_button = tk.Button(user_opt_frame, text="Delete", command=lambda: self.delete_user(), state=tk.DISABLED)
         self.upd_button.pack(side=tk.RIGHT)
         self.del_button.pack(side=tk.RIGHT)
 
@@ -84,17 +86,20 @@ class UserManagementPage(tk.Frame):
     def on_select(self, event):
         widget = event.widget
         index = widget.curselection()[0]
+        self.selected_user = self.users[index]
         self.id_entry.delete(0, tk.END)
-        self.id_entry.insert(0, self.users[index].studentID)
+        self.id_entry.insert(0, self.selected_user.studentID)
         self.fn_entry.delete(0, tk.END)
-        self.fn_entry.insert(0, self.users[index].firstName)
+        self.fn_entry.insert(0, self.selected_user.firstName)
         self.ln_entry.delete(0, tk.END)
-        self.ln_entry.insert(0, self.users[index].lastName)
+        self.ln_entry.insert(0, self.selected_user.lastName)
         self.email_entry.delete(0, tk.END)
-        self.email_entry.insert(0, self.users[index].eMail)
+        self.email_entry.insert(0, self.selected_user.eMail)
         self.pass_entry.delete(0, tk.END)
-        self.pass_entry.insert(0, self.users[index].password)
-        self.suspended = self.users[index].isSuspended
+        self.pass_entry.insert(0, self.selected_user.password)
+        self.suspended = self.selected_user.isSuspended
+        self.upd_button.config(state=tk.ACTIVE)
+        self.del_button.config(state=tk.ACTIVE)
 
     def open_site(self):
         global vm
@@ -111,10 +116,9 @@ class UserManagementPage(tk.Frame):
             messagebox.showinfo("Warning", "This is a teacher and does not have VM assigned.")
 
     def update_user(self):
-        index = self.user_list.curselection()
-        curr_user = self.users[index[0]]
+        curr_user = self.selected_user
         curr_user.studentID = self.id_entry.get()
-        curr_user.setAutoUsername()
+        curr_user.setCustUserName(curr_user.studentID)
         curr_user.firstName = self.fn_entry.get()
         curr_user.lastName = self.ln_entry.get()
         curr_user.eMail = self.email_entry.get()
