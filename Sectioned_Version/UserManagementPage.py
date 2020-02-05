@@ -104,8 +104,7 @@ class UserManagementPage(tk.Frame):
     def open_site(self):
         global vm
         messagebox.showinfo("Warning", "This process may take while. A window will open on your browser when its ready.")
-        index = self.user_list.curselection()
-        curr_user = self.users[index[0]]
+        curr_user = self.selected_user
         if curr_user.assignedVM is not None:
             vm = gt.get_vm_object(curr_user.assignedVM)
             vm.startInstance()
@@ -128,9 +127,7 @@ class UserManagementPage(tk.Frame):
         messagebox.showinfo("Update", "The user information has been updated.")
 
     def delete_user(self):
-        index = self.user_list.curselection()[0]
-        print("print index is", index)
-        curr_user = self.users[index]
+        curr_user = self.selected_user
         if curr_user.isTeacher is False:
             curr_vm = gt.get_vm_object(curr_user.assigned_VM)
             user_response = messagebox.askokcancel("Delete", "Are you sure you want to delete this user? "
