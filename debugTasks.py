@@ -66,7 +66,7 @@ def thread_task():
     t1.start()
     t2.start()
 
-
+#
 # teacher = db.dbUser("Eva", "Longoria", 1234567, "dentalista@gmail.com")
 # teacher.isTeacher = True
 # teacher.setAutoUserName()
@@ -105,5 +105,14 @@ def thread_task():
 # log = test_vm.getLog()
 # print(log)
 
-clear_db()
+def clear_all():
+    for user in gt.gateway_ses.query(db.dbUser):
+        gt.gateway_ses.delete(user)
+#
+# clear_db()
+
+
+# add_teacher("Lady", "Longoria", 1234567, "mendo@lala.land")
+# clear_all()
 display_db()
+

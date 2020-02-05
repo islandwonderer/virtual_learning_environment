@@ -121,7 +121,7 @@ class UserManagementPage(tk.Frame):
         curr_user.firstName = self.fn_entry.get()
         curr_user.lastName = self.ln_entry.get()
         curr_user.eMail = self.email_entry.get()
-        curr_user.password = self.pass_entry.get()
+        curr_user.setCustPassword(self.pass_entry.get())
         curr_user.isSuspended = self.suspended
         gt.save_user(curr_user)
         messagebox.showinfo("Update", "The user information has been updated.")

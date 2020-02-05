@@ -3,7 +3,6 @@ import Gateway as gt
 from tkinter import messagebox
 
 
-
 class LoginPage(tk.Frame):
 
     def __init__(self, parent, controller):

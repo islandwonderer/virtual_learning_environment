@@ -60,7 +60,6 @@ class VMManagementPage(tk.Frame):
     def on_select(self, event):
         widget = event.widget
         index = widget.curselection()[0]
-
         vm = gt.get_vm_object(self.user_list[index].assigned_VM)
         info = vm.getInfo()
         self.ami_out.config(text=info['Reservations'][0]['Instances'][0]['ImageId'])

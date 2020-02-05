@@ -40,7 +40,7 @@ def del_vm(vm_obj):
 # Session Management
 def verify_session(username, password):
     for user in gateway_ses.query(db.dbUser):
-        if user.studentID == username and bcrypt.checkpw(user.password.encode('utf-8'), password.encode('utf-8')):
+        if user.studentID == username and bcrypt.checkpw(password.encode('utf-8'), user.password):
             return True
     return False
 

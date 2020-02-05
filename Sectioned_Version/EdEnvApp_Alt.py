@@ -33,10 +33,10 @@ class EdEnvApp(tk.Tk):
             self.frames[page_name] = frame
             frame.grid(row=0, column=0, sticky=tk.NSEW)
 
-        # self.show_frame("LoginPage")
+        self.show_frame("LoginPage")
         # self.show_frame("TeacherPage")
         # self.show_frame("StudentPage")
-        self.show_frame("UserManagementPage")
+        # self.show_frame("UserManagementPage")
         # self.show_frame("GuestManagementPage")
         # self.show_frame("VMManagementPage")
         # self.show_frame("SettingsPage")
