@@ -14,6 +14,7 @@ class TeacherPage(tk.Frame):
         self.controller = controller
         label = tk.Label(self, text="Teacher Interface:", font=controller.title_font)
         label.grid(row=1, column=1, pady=3, padx=10, sticky=tk.W)
+        self.config = gt.load_config()
 
         # Management Buttons
         man_label = tk.Label(self, text="Manage", font="none 12 bold")
@@ -76,6 +77,7 @@ class TeacherPage(tk.Frame):
         self.start_button.config(state=tk.DISABLED)
         self.users_button.config(state=tk.DISABLED)
         self.VM_button.config(state=tk.DISABLED)
+        self.settings_button.config(state=tk.DISABLED)
 
     def activate_buttons(self):
         self.add_button.config(state=tk.ACTIVE)
@@ -83,6 +85,7 @@ class TeacherPage(tk.Frame):
         self.start_button.config(state=tk.ACTIVE)
         self.users_button.config(state=tk.ACTIVE)
         self.VM_button.config(state=tk.ACTIVE)
+        self.settings_button.config(state=tk.DISABLED)
 
     def clear_single_user_fields(self):
         self.id_entry.delete(0, tk.END)
@@ -96,40 +99,38 @@ class TeacherPage(tk.Frame):
     def open_file(self):
         temp_file = askopenfilename()
         if not temp_file.endswith(".csv"):
-            messagebox.showinfo("File Type Error", "File type must be .csv")
+            messagebox.showinfo("File Type Error", "File type must be .csv", parent=self)
         else:
             self.csv_entry.delete(0, 'end')
             self.csv_entry.insert(0, temp_file)
 
     def add_one_user(self):
         self.deactivate_buttons()
-        temp_id = self.id_entry.get()
+        temp_id = int(self.id_entry.get())
         e_mail = self.em_entry.get()
         first_name = self.fn_entry.get()
         last_name = self.ln_entry.get()
-        ami = self.ami_entry.get()
-        if temp_id != "" and e_mail != "" and first_name != "" and last_name != "" and ami != "":
+        # Checks that all the fields are filled in.
+        if temp_id != "" and e_mail != "" and first_name != "" and last_name != "":
+            # Checks that user has not been previously added
             if gt.user_by_id(temp_id) is None:
-                gt.create_single_user(temp_id, first_name, last_name, e_mail, ami)
-                curr_user = gt.user_by_id(temp_id)
+                curr_user = gt.create_single_user(temp_id, first_name, last_name, e_mail)
+                print(curr_user)
                 curr_vm = gt.get_vm_object(curr_user.assigned_VM)
                 curr_vm.isInstanceReady()
                 curr_vm.stopInstance()
             else:
-                messagebox.showinfo("User Error", "This user already exist")
+                messagebox.showinfo("User Error", "This user already exist", parent=self)
         else:
             messagebox.showinfo("Missing Requirements",
-                                "ID, eMail, First Name, Last Name, and AMI fields must be filled.")
-        self.config["AMI"] = ami
-        gt.save_config(self.config)
+                                "ID, eMail, First Name, and Last Name fields must be filled.", parent=self)
         self.clear_single_user_fields()
         self.activate_buttons()
 
     def create_multi_user(self):
-        ami = self.ami_entry.get()
         cs_file = self.csv_entry.get()
         self.deactivate_buttons()
-        if cs_file != "" and ami != "":
+        if cs_file != "":
             user_csv_list = []
             with open(cs_file, 'r', newline='') as CSV_FILE:
                 reader = csv.reader(CSV_FILE)
@@ -143,9 +144,9 @@ class TeacherPage(tk.Frame):
             # Creates user and assigns vm
             for new_user in user_csv_list:
                 if not gt.user_by_id(int(new_user[0])):
-                    success = gt.create_single_user(new_user[0].strip(), new_user[1].strip(), new_user[2].strip(), new_user[3].strip(), ami)
+                    success = gt.create_single_user(new_user[0].strip(), new_user[1].strip(), new_user[2].strip(), new_user[3].strip())
                     if success is "Fail":
-                        messagebox.showinfo("Warning", "Unable to notify user {0} of their account's password.".format(new_user[0]))
+                        messagebox.showinfo("Warning", "Unable to notify user {0} of their account's password.".format(new_user[0]), parent=self)
                 bar += 1
                 self.csv_progress["value"] = bar
                 self.csv_progress.update()
@@ -164,8 +165,6 @@ class TeacherPage(tk.Frame):
             self.csv_progress["value"] = 0
             self.csv_progress.update()
         else:
-            messagebox.showinfo("Missing Info", "You need to first load a .csv file and provide a valid AMI.")
-        self.config["AMI"] = ami
-        gt.save_config(self.config)
+            messagebox.showinfo("Missing Info", "You need to first load a .csv file and provide a valid AMI.", parent=self)
         self.clear_multi_user_fields()
         self.activate_buttons()

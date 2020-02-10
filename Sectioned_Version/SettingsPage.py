@@ -102,7 +102,7 @@ class SettingsPage(tk.Frame):
         self.port_entry.insert(0, self.config["port"])
 
     def cancel_warning(self):
-        result = messagebox.askokcancel("Warning", "Do you want to continue? Any changes to these settings will be lost.")
+        result = messagebox.askokcancel("Warning", "Do you want to continue? Any changes to these settings will be lost.", parent=self)
         if result is True:
             self.controller.show_frame("TeacherPage")
         else:

@@ -107,6 +107,8 @@ class dbComputer(Base):
         )
         self.instanceObject = instance[0]
         self.InstanceId = self.instanceObject.id
+        start_log = {"Start Time": 0, "On Time": 0}
+        self.setLog(start_log)
 
     def startInstance(self):
         client.start_instances(InstanceIds=[self.InstanceId])
@@ -117,17 +119,18 @@ class dbComputer(Base):
         client.stop_instances(InstanceIds=[self.InstanceId])
         end = time.time()
         log = self.getLog()
-        start = log["Start Time"]
-        duration = end - start
-        if log["On Time"]:
-            onTime = log["On Time"]
-            onTime.append(duration)
-            log["On Time"] = onTime
-        else:
-            onTime=[]
-            onTime.append(duration)
-            log["On Time"] = onTime
-        self.setLog(log)
+        if log is not {}:
+            start = log["Start Time"]
+            duration = end - start
+            if log["On Time"]:
+                onTime = log["On Time"]
+                onTime.append(duration)
+                log["On Time"] = onTime
+            else:
+                onTime=[]
+                onTime.append(duration)
+                log["On Time"] = onTime
+            self.setLog(log)
 
     def deleteInstace(self):
         client.terminate_instances(InstanceIds=[self.InstanceId])

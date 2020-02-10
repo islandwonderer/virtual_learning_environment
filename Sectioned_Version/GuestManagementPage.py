@@ -62,7 +62,7 @@ class GuestManagementPage(tk.Frame):
         curr_vm = gt.get_vm_object(self.curr_user.assigned_VM)
         curr_vm.startInstance()
         messagebox.showinfo("Warning",
-                            "This process may take while. A window will open on your browser when its ready.")
+                            "This process may take while. A window will open on your browser when its ready.", parent=self)
         curr_vm.isInstanceReady()
         site = "http://" + curr_vm.getInstaceIP() + "/moodle"
         webbrowser.open(site)
@@ -118,7 +118,7 @@ class GuestManagementPage(tk.Frame):
             self.link_button.config(state=tk.DISABLED)
         else:
             if " " in term:
-                messagebox.showinfo("Warning", "Please enter a single search term")
+                messagebox.showinfo("Warning", "Please enter a single search term", parent=self)
             else:
                 self.user_list.delete(0, tk.END)
                 for ser_user in self.users:
@@ -129,5 +129,5 @@ class GuestManagementPage(tk.Frame):
                         self.user_list.update()
                         counter += 1
                 if counter is 0:
-                    messagebox.showinfo("Warning", "No matching records.")
+                    messagebox.showinfo("Warning", "No matching records.", parent=self)
                     self.update_list()

@@ -65,7 +65,7 @@ class StudentPage(tk.Frame):
         self.vis_button.grid(row=10, column=2, sticky="E", padx=10, pady=12)
 
     def set_ready(self):
-        messagebox.showinfo("Ready", "Your instance is ready!")
+        messagebox.showinfo("Ready", "Your instance is ready!", parent=self)
         self.start_button.config(text="LogOut", command=lambda: self.log_out())
         self.start_button.config(state=tk.ACTIVE)
         self.load_progress["value"] = self.waitTime

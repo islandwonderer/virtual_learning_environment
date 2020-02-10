@@ -61,6 +61,7 @@ class VMManagementPage(tk.Frame):
         widget = event.widget
         index = widget.curselection()[0]
         vm = gt.get_vm_object(self.user_list[index].assigned_VM)
+        print(vm)
         info = vm.getInfo()
         self.ami_out.config(text=info['Reservations'][0]['Instances'][0]['ImageId'])
         self.owner_out.config(text=(self.user_list[index].firstName + " " + self.user_list[index].lastName))
@@ -97,6 +98,6 @@ class VMManagementPage(tk.Frame):
                 with open(file_name, 'w') as json_file:
                     json.dump(log, json_file)
         except OSError:
-            messagebox.showinfo("Error", "Read only filesystem. \n Save at alternative location.")
+            messagebox.showinfo("Error", "Read only filesystem. \n Save at alternative location.", parent=self)
 
 

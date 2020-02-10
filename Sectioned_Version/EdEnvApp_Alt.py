@@ -47,7 +47,7 @@ class EdEnvApp(tk.Tk):
         frame.tkraise()
 
     def shut_down(self):
-        if messagebox.askokcancel("Exit", "Are you sure you want to exit?"):
+        if messagebox.askokcancel("Exit", "Are you sure you want to exit?", parent=self):
             if vm:
                 vm.stopInstance()
             self.destroy()

@@ -87,15 +87,11 @@ class UserManagementPage(tk.Frame):
         widget = event.widget
         index = widget.curselection()[0]
         self.selected_user = self.users[index]
-        self.id_entry.delete(0, tk.END)
+        self.clear_form()
         self.id_entry.insert(0, self.selected_user.studentID)
-        self.fn_entry.delete(0, tk.END)
         self.fn_entry.insert(0, self.selected_user.firstName)
-        self.ln_entry.delete(0, tk.END)
         self.ln_entry.insert(0, self.selected_user.lastName)
-        self.email_entry.delete(0, tk.END)
         self.email_entry.insert(0, self.selected_user.eMail)
-        self.pass_entry.delete(0, tk.END)
         self.pass_entry.insert(0, self.selected_user.password)
         self.suspended = self.selected_user.isSuspended
         self.upd_button.config(state=tk.ACTIVE)
@@ -103,7 +99,7 @@ class UserManagementPage(tk.Frame):
 
     def open_site(self):
         global vm
-        messagebox.showinfo("Warning", "This process may take while. A window will open on your browser when its ready.")
+        messagebox.showinfo("Warning", "This process may take while. A window will open on your browser when its ready.", parent=self)
         curr_user = self.selected_user
         if curr_user.assignedVM is not None:
             vm = gt.get_vm_object(curr_user.assignedVM)
@@ -112,7 +108,7 @@ class UserManagementPage(tk.Frame):
             site = "http://" + vm.getInstaceIP() + "/moodle"
             webbrowser.open(site)
         else:
-            messagebox.showinfo("Warning", "This is a teacher and does not have VM assigned.")
+            messagebox.showinfo("Warning", "This is a teacher and does not have VM assigned.", parent=self)
 
     def update_user(self):
         curr_user = self.selected_user
@@ -147,6 +143,8 @@ class UserManagementPage(tk.Frame):
         else:
             messagebox.showinfo("Warning", "This is a teacher and cannot be removed this way.")
 
+        self.clear_form()
+
     def update_list(self):
         self.user_list.delete(0, tk.END)
         users = gt.get_list_users()
@@ -157,5 +155,11 @@ class UserManagementPage(tk.Frame):
         self.user_list.update()
         return users
 
+    def clear_form(self):
+        self.id_entry.delete(0, tk.END)
+        self.fn_entry.delete(0, tk.END)
+        self.ln_entry.delete(0, tk.END)
+        self.email_entry.delete(0, tk.END)
+        self.pass_entry.delete(0, tk.END)
 
 

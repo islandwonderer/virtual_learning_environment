@@ -18,14 +18,21 @@ def clear_db():
     for user in gt.gateway_ses.query(db.dbUser):
         if not user.isTeacher:
             gt.gateway_ses.delete(user)
+    for vm in gt.gateway_ses.query(db.dbComputer):
+        gt.gateway_ses.delete(vm)
     gt.gateway_ses.commit()
     for user in gt.gateway_ses.query(db.dbUser):
         print(user)
+    for vm in gt.gateway_ses.query(db.dbComputer):
+        print(vm)
+
 
 def display_db():
     print("Current DB")
     for user in gt.gateway_ses.query(db.dbUser):
         print(user)
+    for vm in gt.gateway_ses.query(db.dbComputer):
+        print(vm)
 
 
 def update_config():
@@ -104,15 +111,15 @@ def thread_task():
 # test_vm = gt.get_vm_object(test_user.assigned_VM)
 # log = test_vm.getLog()
 # print(log)
-
-def clear_all():
-    for user in gt.gateway_ses.query(db.dbUser):
-        gt.gateway_ses.delete(user)
+#
+# def clear_all():
+#     for user in gt.gateway_ses.query(db.dbUser):
+#         gt.gateway_ses.delete(user)
 #
 # clear_db()
 
 
 # add_teacher("Lady", "Longoria", 1234567, "mendo@lala.land")
-# clear_all()
+
 display_db()
 

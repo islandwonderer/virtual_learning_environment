@@ -17,8 +17,9 @@ gateway_ses = Session()
 
 
 # VM Management
-def create_vm(ami):
-    new_instance = db.dbComputer(ami)
+def create_vm():
+    sc = load_config()
+    new_instance = db.dbComputer(sc["AMI"], sc["instance_type"], sc["key_name"], [sc["security_group_id"]])
     gateway_ses.add(new_instance)
     gateway_ses.commit()
     return new_instance
@@ -57,11 +58,11 @@ def load_config():
 
 
 # User Management
-def create_single_user(u_id, first, last, email, ami):
+def create_single_user(u_id, first, last, email):
     if user_by_id(u_id) is None:
         new_user = db.dbUser(first, last, u_id, email)
         password = new_user.setAutoPassword()
-        new_instance = create_vm(ami)
+        new_instance = create_vm()
         new_user.assigned_VM = new_instance.InstanceId
         date_stamp = dt.datetime.now().strftime("%d-%b-%Y (%H:%M:%S.%f)")
         start_log = {'Created': date_stamp}
@@ -74,8 +75,8 @@ def create_single_user(u_id, first, last, email, ami):
                   "To login use your student ID and this password '{}'.\n Wishing you a good year:\n " \
                   "The Teaching Staff".format(new_user.firstName, password)
         subject = "158.120 Gateway Info for {}".format(new_user.firstName)
-        success = notify_user(new_user, message, subject)
-        return success
+        notify_user(new_user, message, subject)
+        return new_user
 
 
 def user_by_id(u_id):
