@@ -6,6 +6,7 @@ from dbModels import Session
 import json
 import datetime as dt
 import bcrypt
+import time
 
 # Setup
 default_password = ""
@@ -66,7 +67,8 @@ def create_single_user(u_id, first, last, email):
         new_user.assigned_VM = new_instance.InstanceId
         date_stamp = dt.datetime.now().strftime("%d-%b-%Y (%H:%M:%S.%f)")
         start_log = {'Created': date_stamp}
-        new_instance.setLog(start_log)
+        instance_log = {'Created': date_stamp,'Start Time': time.time(), 'On Time': []}
+        new_instance.setLog(instance_log)
         new_user.setLog(start_log)
         gateway_ses.add(new_user)
         gateway_ses.add(new_instance)

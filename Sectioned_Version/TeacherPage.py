@@ -85,7 +85,7 @@ class TeacherPage(tk.Frame):
         self.start_button.config(state=tk.ACTIVE)
         self.users_button.config(state=tk.ACTIVE)
         self.VM_button.config(state=tk.ACTIVE)
-        self.settings_button.config(state=tk.DISABLED)
+        self.settings_button.config(state=tk.ACTIVE)
 
     def clear_single_user_fields(self):
         self.id_entry.delete(0, tk.END)
