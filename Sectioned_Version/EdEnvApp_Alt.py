@@ -46,6 +46,10 @@ class EdEnvApp(tk.Tk):
         frame = self.frames[page_name]
         frame.tkraise()
 
+    def refresh_frame(self, page_name):
+        frame = self.frames[page_name]
+        frame.update_idletasks()
+
     def shut_down(self):
         if messagebox.askokcancel("Exit", "Are you sure you want to exit?", parent=self):
             if vm:

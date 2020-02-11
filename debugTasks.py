@@ -85,7 +85,6 @@ def thread_task():
 # display_db()
 # thread_tasks()
 # update_config()
-# add_teacher("Eva", "Heinrich", 31415926, "E.Heinrich@massey.ac.nz")
 
 
 # teacher = gt.user_by_id(31415926)

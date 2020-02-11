@@ -96,6 +96,10 @@ class TeacherPage(tk.Frame):
     def clear_multi_user_fields(self):
         self.csv_entry.delete(0, tk.END)
 
+    def update_pages(self):
+        self.controller.refresh_frame("UserManagementPage")
+        self.controller.refresh_frame("VMManagementPage")
+
     def open_file(self):
         temp_file = askopenfilename()
         if not temp_file.endswith(".csv"):
@@ -125,6 +129,7 @@ class TeacherPage(tk.Frame):
             messagebox.showinfo("Missing Requirements",
                                 "ID, eMail, First Name, and Last Name fields must be filled.", parent=self)
         self.clear_single_user_fields()
+        self.update_pages()
         self.activate_buttons()
 
     def create_multi_user(self):
@@ -167,4 +172,5 @@ class TeacherPage(tk.Frame):
         else:
             messagebox.showinfo("Missing Info", "You need to first load a .csv file and provide a valid AMI.", parent=self)
         self.clear_multi_user_fields()
+        self.update_pages()
         self.activate_buttons()
