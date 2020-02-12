@@ -12,7 +12,7 @@ class UserManagementPage(tk.Frame):
         self.controller = controller
         top_label = tk.Label(self, text="User Management:", font=controller.title_font)
         top_label.grid(row=1, column=1, pady=5, padx=10, sticky=tk.W)
-
+        self.has_list = True
         self.selected_user = None
 
         # Users List

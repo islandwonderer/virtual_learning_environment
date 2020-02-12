@@ -43,13 +43,11 @@ class EdEnvApp(tk.Tk):
 
     def show_frame(self, page_name):
         # Show a frame for the given page name
-        self.update_idletasks()
         frame = self.frames[page_name]
+        # Refresh the list if it has a list.
+        if frame.has_list:
+            frame.update_list()
         frame.tkraise()
-
-    def refresh_frame(self, page_name):
-        frame = self.frames[page_name]
-        frame.update_idletasks()
 
     def shut_down(self):
         if messagebox.askokcancel("Exit", "Are you sure you want to exit?", parent=self):

@@ -12,9 +12,10 @@ class GuestManagementPage(tk.Frame):
 
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        self.users = gt.get_list_users()
+        self.users = self.get_valid_users()
         self.curr_user = None
         self.is_toggled = False
+        self.has_list = True
 
         # Label and Nav
         top_label = tk.Label(self, text="Guest Access:", font=controller.title_font)
@@ -131,3 +132,12 @@ class GuestManagementPage(tk.Frame):
                 if counter is 0:
                     messagebox.showinfo("Warning", "No matching records.", parent=self)
                     self.update_list()
+
+    @staticmethod
+    def get_valid_users():
+        valid_users = []
+        all_users = gt.get_list_users()
+        for user in all_users:
+            if user.assigned_VM is not None:
+                valid_users.append(user)
+        return valid_users

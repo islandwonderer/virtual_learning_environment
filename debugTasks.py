@@ -119,6 +119,5 @@ def thread_task():
 
 
 # add_teacher("Lady", "Longoria", 1234567, "mendo@lala.land")
-
 display_db()
 

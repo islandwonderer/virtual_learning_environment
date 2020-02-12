@@ -18,6 +18,7 @@ class LoginPage(tk.Frame):
         self.pwEntry.pack()
         self.login = tk.Button(self, text="Login", command=self.verify_login)
         self.login.pack()
+        self.has_list = True
 
     def verify_login(self):
         global user
