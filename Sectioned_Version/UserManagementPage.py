@@ -161,5 +161,3 @@ class UserManagementPage(tk.Frame):
         self.ln_entry.delete(0, tk.END)
         self.email_entry.delete(0, tk.END)
         self.pass_entry.delete(0, tk.END)
-
-

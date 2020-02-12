@@ -17,7 +17,7 @@ class VMManagementPage(tk.Frame):
         self.bk_button.grid(row=1, column=2, padx=10, sticky=tk.E)
         self.columnconfigure(1, weight=2)
         self.columnconfigure(2, weight=2)
-        self.user_list = gt.get_list_users()
+        self.user_list = self.get_valid_users()
 
         # Power Management
         power_label = tk.Label(self, text="Power", font="none 12 bold")
@@ -60,6 +60,7 @@ class VMManagementPage(tk.Frame):
     def on_select(self, event):
         widget = event.widget
         index = widget.curselection()[0]
+        print(self.user_list[index])
         vm = gt.get_vm_object(self.user_list[index].assigned_VM)
         print(vm)
         info = vm.getInfo()
@@ -100,4 +101,10 @@ class VMManagementPage(tk.Frame):
         except OSError:
             messagebox.showinfo("Error", "Read only filesystem. \n Save at alternative location.", parent=self)
 
-
+    def get_valid_users(self):
+        valid_users = []
+        all_users = gt.get_list_users()
+        for user in all_users:
+            if user.assigned_VM is not None:
+                valid_users.append(user)
+        return valid_users
