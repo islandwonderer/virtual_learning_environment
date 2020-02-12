@@ -71,21 +71,17 @@ class VMManagementPage(tk.Frame):
 
     def power_all(self):
         for vm_user in self.user_list:
-            if vm_user.assigned_VM is not None:
-                curr_vm = gt.get_vm_object(vm_user.assigned_VM)
-                curr_vm.startInstance()
-                print(curr_vm)
+            curr_vm = gt.get_vm_object(vm_user.assigned_VM)
+            curr_vm.startInstance()
 
     def shutdown_all(self):
         for vm_user in self.user_list:
-            if vm_user.assigned_VM is not None:
-                curr_vm = gt.get_vm_object(vm_user.assigned_VM)
-                curr_vm.stopInstance()
+            curr_vm = gt.get_vm_object(vm_user.assigned_VM)
+            curr_vm.stopInstance()
 
     def update_list(self):
         for vm_user in self.user_list:
-            if vm_user.assigned_VM is not None:
-                self.vm_list.insert(tk.END, vm_user.assigned_VM)
+            self.vm_list.insert(tk.END, vm_user.assigned_VM)
 
     def download(self, vm):
         file = asksaveasfilename(initialdir="/", title="Save File", filetypes={("JSON files", "*.json")})
