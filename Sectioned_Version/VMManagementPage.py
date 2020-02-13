@@ -19,6 +19,7 @@ class VMManagementPage(tk.Frame):
         self.columnconfigure(2, weight=2)
         self.user_list = self.get_valid_users()
         self.has_list = True
+        self.selected_vm = None
 
         # Power Management
         power_label = tk.Label(self, text="Power", font="none 12 bold")
@@ -57,20 +58,32 @@ class VMManagementPage(tk.Frame):
         dwn_info.grid(row=11, column=2, padx=10, sticky=tk.W)
         self.dwn_button = tk.Button(self, text="Download", state=tk.DISABLED)
         self.dwn_button.grid(row=12, column=2, padx=10, sticky=tk.EW)
+        dwn_info = tk.Label(self, text="Power", font="none 12 underline")
+        dwn_info.grid(row=13, column=2, padx=10, sticky=tk.W)
+        powr_buttons = tk.Frame(self)
+        self.on_button = tk.Button(powr_buttons, text="Start", state=tk.DISABLED)
+        self.off_button = tk.Button(powr_buttons, text="Stop", state=tk.DISABLED)
+        self.on_button.pack(side=tk.LEFT)
+        self.off_button.pack(side=tk.LEFT)
+        powr_buttons.grid(row=14, column=2, padx=10, sticky=tk.W)
 
     def on_select(self, event):
         widget = event.widget
-        print(widget.curselection)
         index = widget.curselection()[0]
-        print(index)
-        print("Length of List ", len(self.user_list))
-        vm = gt.get_vm_object(self.user_list[index].assigned_VM)
-        print(vm)
-        info = vm.getInfo()
+        self.selected_vm = gt.get_vm_object(self.user_list[index].assigned_VM)
+        info = self.selected_vm.getInfo()
         self.ami_out.config(text=info['Reservations'][0]['Instances'][0]['ImageId'])
         self.owner_out.config(text=(self.user_list[index].firstName + " " + self.user_list[index].lastName))
         self.status_out.config(text=info['Reservations'][0]['Instances'][0]['State']['Name'])
-        self.dwn_button.config(state=tk.ACTIVE, command=lambda: self.download(vm))
+        self.dwn_button.config(state=tk.ACTIVE, command=lambda: self.download(self.selected_vm))
+        self.on_button.config(state=tk.ACTIVE, command=lambda: self.power("ON"))
+        self.off_button.config(state=tk.ACTIVE, command=lambda: self.power("OFF"))
+
+    def power(self, status):
+        if status == "ON":
+            self.selected_vm.startInstance()
+        elif status == "OFF":
+            self.selected_vm.stopInstance()
 
     def power_all(self):
         for vm_user in self.user_list:

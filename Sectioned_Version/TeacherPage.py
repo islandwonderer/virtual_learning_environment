@@ -20,13 +20,13 @@ class TeacherPage(tk.Frame):
         # Management Buttons
         man_label = tk.Label(self, text="Manage", font="none 12 bold")
         man_label.grid(row=2, column=1, sticky=tk.W, padx=10)
-        user_buttons = tk.Frame(self)
-        user_buttons.grid(row=3, column=1, sticky=tk.EW, padx=10)
-        self.users_button = tk.Button(user_buttons, text="Users",
+        manage_buttons = tk.Frame(self)
+        manage_buttons.grid(row=3, column=1, sticky=tk.EW, padx=10)
+        self.users_button = tk.Button(manage_buttons, text="Users",
                                       command=lambda: self.controller.show_frame("UserManagementPage"))
-        self.VM_button = tk.Button(user_buttons, text="VMs",
+        self.VM_button = tk.Button(manage_buttons, text="VMs",
                                    command=lambda: self.controller.show_frame("VMManagementPage"))
-        self.settings_button = tk.Button(user_buttons, text="Settings",
+        self.settings_button = tk.Button(manage_buttons, text="Settings",
                                         command=lambda: self.controller.show_frame("SettingsPage"))
         self.VM_button.pack(side=tk.LEFT)
         self.users_button.pack(side=tk.LEFT)
