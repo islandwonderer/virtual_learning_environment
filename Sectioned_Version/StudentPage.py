@@ -14,7 +14,7 @@ class StudentPage(tk.Frame):
         self.controller = controller
         stat_label = tk.Label(self, text="Student Interface:", font=controller.title_font)
         stat_label.grid(row=1, column=1, pady=5, padx=10, sticky=tk.NSEW)
-        self.has_list = True
+        self.has_list = False
 
         # Setup
         self.config = gt.load_config()

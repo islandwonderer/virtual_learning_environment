@@ -11,7 +11,7 @@ class SettingsPage(tk.Frame):
         label = tk.Label(self, text="Settings:", font=controller.title_font)
         label.grid(row=1, column=1, pady=3, padx=10, sticky=tk.W)
         self.config = gt.load_config()
-        self.has_list = True
+        self.has_list = False
 
         # VM Settings
         vm_settings_label = tk.Label(self, text="VM Settings", font="none 12 bold")

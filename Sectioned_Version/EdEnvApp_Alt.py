@@ -45,7 +45,7 @@ class EdEnvApp(tk.Tk):
         # Show a frame for the given page name
         frame = self.frames[page_name]
         # Refresh the list if it has a list.
-        if frame.has_list:
+        if frame.has_list is True:
             frame.update_list()
         frame.tkraise()
 

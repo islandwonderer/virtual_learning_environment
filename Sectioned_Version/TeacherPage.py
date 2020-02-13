@@ -15,7 +15,7 @@ class TeacherPage(tk.Frame):
         label = tk.Label(self, text="Teacher Interface:", font=controller.title_font)
         label.grid(row=1, column=1, pady=3, padx=10, sticky=tk.W)
         self.config = gt.load_config()
-        self.has_list = True
+        self.has_list = False
 
         # Management Buttons
         man_label = tk.Label(self, text="Manage", font="none 12 bold")
