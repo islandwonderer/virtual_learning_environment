@@ -77,8 +77,8 @@ def create_single_user(u_id, first, last, email):
                   "To login use your student ID and this password '{}'.\n Wishing you a good year:\n " \
                   "The Teaching Staff".format(new_user.firstName, password)
         subject = "158.120 Gateway Info for {}".format(new_user.firstName)
-        notify_user(new_user, message, subject)
-        return new_user
+        success = notify_user(new_user, message, subject)
+        return new_user, success
 
 
 def user_by_id(u_id):
@@ -140,6 +140,7 @@ def notify_user(user, message, subject):
         e_mail.send_message(msg)
     except smtplib.SMTPAuthenticationError:
         e_mail.quit()
-        return "Fail"
+        return False
     e_mail.quit()
     del msg
+    return True

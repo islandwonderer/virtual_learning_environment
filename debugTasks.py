@@ -115,9 +115,7 @@ def thread_task():
 #     for user in gt.gateway_ses.query(db.dbUser):
 #         gt.gateway_ses.delete(user)
 #
-# clear_db()
-
-
+clear_db()
 # add_teacher("Lady", "Longoria", 1234567, "mendo@lala.land")
 display_db()
 

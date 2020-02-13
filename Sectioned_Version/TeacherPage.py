@@ -64,7 +64,6 @@ class TeacherPage(tk.Frame):
         self.csv_entry.grid(row=12, column=1, sticky=tk.W, padx=10, pady=3)
         self.csv_progress = Progressbar(self, orient='horizontal', length=165, mode='determinate')
         self.csv_progress.grid(row=12, column=2, sticky=tk.W, padx=10, pady=3)
-
         self.add_button = tk.Button(self, text="Add", command=lambda: self.add_one_user())
         self.add_button.grid(row=9, column=2, sticky="E", padx=10, pady=3)
         self.open_button = tk.Button(self, text="Open", command=lambda: self.open_file())
@@ -72,33 +71,19 @@ class TeacherPage(tk.Frame):
         self.start_button = tk.Button(self, text="Start", command=lambda: self.create_multi_user())
         self.start_button.grid(row=13, column=2, sticky="E", padx=10, pady=5)
 
+        # List of buttons for enabling and disabling
+        self.buttons_list = [self.add_button, self.open_button, self.start_button, self.users_button, self.VM_button,
+                             self.settings_button]
+
     def deactivate_buttons(self):
-        self.add_button.config(state=tk.DISABLED)
-        self.add_button.update()
-        self.open_button.config(state=tk.DISABLED)
-        self.open_button.update()
-        self.start_button.config(state=tk.DISABLED)
-        self.start_button.update()
-        self.users_button.config(state=tk.DISABLED)
-        self.users_button.update()
-        self.VM_button.config(state=tk.DISABLED)
-        self.VM_button.update()
-        self.settings_button.config(state=tk.DISABLED)
-        self.settings_button.update()
+        for button in self.buttons_list:
+            button.config(state=tk.DISABLED)
+            button.update()
 
     def activate_buttons(self):
-        self.add_button.config(state=tk.ACTIVE)
-        self.add_button.update()
-        self.open_button.config(state=tk.ACTIVE)
-        self.open_button.update()
-        self.start_button.config(state=tk.ACTIVE)
-        self.start_button.update()
-        self.users_button.config(state=tk.ACTIVE)
-        self.users_button.update()
-        self.VM_button.config(state=tk.ACTIVE)
-        self.VM_button.update()
-        self.settings_button.config(state=tk.ACTIVE)
-        self.settings_button.update()
+        for button in self.buttons_list:
+            button.config(state=tk.ACTIVE)
+            button.update()
 
     def clear_single_user_fields(self):
         self.id_entry.delete(0, tk.END)
@@ -127,8 +112,7 @@ class TeacherPage(tk.Frame):
         if temp_id != "" and e_mail != "" and first_name != "" and last_name != "":
             # Checks that user has not been previously added
             if gt.user_by_id(temp_id) is None:
-                curr_user = gt.create_single_user(temp_id, first_name, last_name, e_mail)
-                print(curr_user)
+                curr_user = gt.create_single_user(temp_id, first_name, last_name, e_mail)[0]
                 curr_vm = gt.get_vm_object(curr_user.assigned_VM)
                 curr_vm.isInstanceReady()
                 curr_vm.stopInstance()
@@ -156,10 +140,11 @@ class TeacherPage(tk.Frame):
 
             # Creates user and assigns vm
             for new_user in user_csv_list:
-                if not gt.user_by_id(int(new_user[0])):
-                    success = gt.create_single_user(new_user[0].strip(), new_user[1].strip(), new_user[2].strip(), new_user[3].strip())
-                    if success is "Fail":
-                        messagebox.showinfo("Warning", "Unable to notify user {0} of their account's password.".format(new_user[0]), parent=self)
+                if new_user:
+                    if gt.user_by_id(int(new_user[0])) is None:
+                        success = gt.create_single_user(new_user[0].strip(), new_user[1].strip(), new_user[2].strip(), new_user[3].strip())
+                        if not success[1]:
+                            messagebox.showinfo("Warning", "Unable to notify user {0} of their account's password.".format(new_user[0]), parent=self)
                 bar += 1
                 self.csv_progress["value"] = bar
                 self.csv_progress.update()
