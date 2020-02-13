@@ -100,6 +100,7 @@ class VMManagementPage(tk.Frame):
         self.user_list = self.get_valid_users()
         for vm_user in self.user_list:
             self.vm_list.insert(tk.END, vm_user.assigned_VM)
+        self.vm_list.update()
 
     def download(self, vm):
         file = asksaveasfilename(initialdir="/", title="Save File", filetypes={("JSON files", "*.json")})

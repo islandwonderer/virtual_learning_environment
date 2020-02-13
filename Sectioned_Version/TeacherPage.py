@@ -159,7 +159,7 @@ class TeacherPage(tk.Frame):
                 self.csv_progress["value"] = bar
                 self.csv_progress.update()
 
-            messagebox.showinfo("Done", "Process completed.")
+            messagebox.showinfo("Done", "Process completed.", parent=self)
             self.csv_progress["value"] = 0
             self.csv_progress.update()
         else:

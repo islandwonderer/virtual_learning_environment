@@ -22,7 +22,7 @@ class UserManagementPage(tk.Frame):
         self.bk_button.grid(row=1, column=2, padx=10, sticky=tk.E)
         self.user_list = tk.Listbox(self, height=18)
         self.user_list.grid(row=3, column=1, padx=10, pady=5, sticky=tk.W, rowspan=20)
-        self.users = self.update_list()
+        self.users = self.get_valid_users()
         self.user_list.bind('<<ListboxSelect>>', self.on_select)
 
         # Selected User Details
@@ -120,7 +120,7 @@ class UserManagementPage(tk.Frame):
         curr_user.setCustPassword(self.pass_entry.get())
         curr_user.isSuspended = self.suspended
         gt.save_user(curr_user)
-        messagebox.showinfo("Update", "The user information has been updated.")
+        messagebox.showinfo("Update", "The user information has been updated.", parent=self)
 
     def delete_user(self):
         curr_user = self.selected_user
@@ -141,19 +141,18 @@ class UserManagementPage(tk.Frame):
                 self.update_list()
 
         else:
-            messagebox.showinfo("Warning", "This is a teacher and cannot be removed this way.")
+            messagebox.showinfo("Warning", "This is a teacher and cannot be removed this way.", parent=self)
 
         self.clear_form()
 
     def update_list(self):
         self.user_list.delete(0, tk.END)
-        users = gt.get_list_users()
-        for user in users:
+        self.users = self.get_valid_users()
+        for user in self.users:
             text = "{}, {}, {}"
             text = text.format(user.lastName, user.firstName, user.studentID)
             self.user_list.insert(tk.END, text)
         self.user_list.update()
-        return users
 
     def clear_form(self):
         self.id_entry.delete(0, tk.END)
@@ -161,3 +160,8 @@ class UserManagementPage(tk.Frame):
         self.ln_entry.delete(0, tk.END)
         self.email_entry.delete(0, tk.END)
         self.pass_entry.delete(0, tk.END)
+
+    @staticmethod
+    def get_valid_users():
+        all_users = gt.get_list_users()
+        return all_users
