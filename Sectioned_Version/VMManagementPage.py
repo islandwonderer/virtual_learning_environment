@@ -96,9 +96,9 @@ class VMManagementPage(tk.Frame):
             curr_vm.stopInstance()
 
     def update_list(self):
+        self.vm_list.delete(0, tk.END)
         self.user_list = self.get_valid_users()
         for vm_user in self.user_list:
-            self.vm_list.delete(0, tk.END)
             self.vm_list.insert(tk.END, vm_user.assigned_VM)
 
     def download(self, vm):
