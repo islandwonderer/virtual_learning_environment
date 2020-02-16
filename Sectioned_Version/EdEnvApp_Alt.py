@@ -9,8 +9,7 @@ from Sectioned_Version.GuestManagementPage import GuestManagementPage
 from Sectioned_Version.VMManagementPage import VMManagementPage
 from Sectioned_Version.SettingsPage import SettingsPage
 
-user = None
-vm = None
+
 
 
 class EdEnvApp(tk.Tk):
@@ -19,6 +18,8 @@ class EdEnvApp(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
         self.winfo_toplevel().title("IT Virtual Learning Environment")
         self.title_font = tkFont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
+        self.vm = None
+        self.user = None
 
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
@@ -51,8 +52,8 @@ class EdEnvApp(tk.Tk):
 
     def shut_down(self):
         if messagebox.askokcancel("Exit", "Are you sure you want to exit?", parent=self):
-            if vm:
-                vm.stopInstance()
+            if self.vm:
+                self.vm.stopInstance()
             self.destroy()
 
 

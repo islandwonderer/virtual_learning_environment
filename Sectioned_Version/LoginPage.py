@@ -21,15 +21,13 @@ class LoginPage(tk.Frame):
         self.has_list = False
 
     def verify_login(self):
-        global user
-        global vm
         user_id = int(self.unEntry.get())
         if gt.verify_session(user_id, self.pwEntry.get()):
             user = gt.user_by_id(user_id)
             if user.isTeacher is False:
                 if user.isSuspended is False:
-                    vm = gt.get_vm_object(user.assigned_VM)
-                    vm.startInstance()
+                    self.controller.vm = gt.get_vm_object(user.assigned_VM)
+                    self.controller.vm.startInstance()
                     self.controller.show_frame("StudentPage")
                 else:
                     messagebox.showinfo("Warning", "Your Account Has Been Suspended. Please Contact Instructor", parent=self)

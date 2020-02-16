@@ -71,7 +71,7 @@ class StudentPage(tk.Frame):
         self.start_button.config(state=tk.ACTIVE)
         self.load_progress["value"] = self.waitTime
         self.load_progress.update()
-        vm_ip = vm.getInstaceIP()
+        vm_ip = self.controller.vm.getInstaceIP()
         self.moodle_site = "http://" + vm_ip + "/moodle"
         self.php_my_admin_site = "http://" + vm_ip + "/phpmyadmin"
         self.ftp_site = "http://" + vm_ip + "/myftp"
@@ -80,7 +80,7 @@ class StudentPage(tk.Frame):
         self.ftp_button.config(state=tk.ACTIVE)
 
     def check_status(self):
-        global vm
+        vm = self.controller.vm
         self.start_button.config(state=tk.DISABLED)
         self.start_button.update()
         vm.isInstanceReady()
@@ -105,9 +105,10 @@ class StudentPage(tk.Frame):
         display.start()
 
     def log_out(self):
-        vm.stopInstance()
+        self.controller.vm.stopInstance()
         self.controller.show_frame("LoginPage")
 
-    def open_page(self, url):
+    @staticmethod
+    def open_page(url):
         webbrowser.open(url)
 
