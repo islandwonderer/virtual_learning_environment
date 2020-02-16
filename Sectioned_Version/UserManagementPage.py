@@ -91,7 +91,7 @@ class UserManagementPage(tk.Frame):
         self.pass_entry.insert(0, self.selected_user.password)
         self.suspended = self.selected_user.isSuspended
         if self.suspended:
-            self.suspend_button.config(text="Unsuspend")
+            self.suspend_button.config(text="Enable")
         self.suspend_button.config(state=tk.ACTIVE)
         self.upd_button.config(state=tk.ACTIVE)
         self.del_button.config(state=tk.ACTIVE)
