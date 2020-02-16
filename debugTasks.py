@@ -35,21 +35,6 @@ def display_db():
         print(vm)
 
 
-def update_config():
-    config = gt.load_config()
-    config['mood_info'] = "Create your own account."
-    config['php_info'] = "Username:student1 • Password:159383"
-    config['ftp_info'] = "Server:localhost • Username:student1 • Password:159383"
-    config['AMI'] = ""
-    config['instance_type'] = "t2.micro"
-    config['key_name'] = "temple_key"
-    config["security_group_id"] = "sg-0c634b7f3a9a3600c"
-    gt.save_config(config)
-
-
-instanceIsReady = False
-
-
 def check_status(this_instance):
     global instanceIsReady
     this_instance.isInstanceReady()
@@ -74,7 +59,7 @@ def thread_task():
     t2.start()
 
 #
-# teacher = db.dbUser("Eva", "Longoria", 1234567, "dentalista@gmail.com")
+# teacher = db.dbUser("Eva", "Longoria", 1234567, "faketest@psudomail.com")
 # teacher.isTeacher = True
 # teacher.setAutoUserName()
 # teacher.setCustPassword("TestPass")
@@ -116,6 +101,6 @@ def thread_task():
 #         gt.gateway_ses.delete(user)
 #
 # add_teacher("Lady", "Longoria", 1234567, "mendo@lala.land")
-clear_db()
+# clear_db()
 display_db()
 
