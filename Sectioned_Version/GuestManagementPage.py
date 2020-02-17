@@ -102,7 +102,7 @@ class GuestManagementPage(tk.Frame):
         self.controller.vm = gt.get_vm_object(self.controller.user.assigned_VM)
 
         self.toggle_button()
-        self.user_list.config(state=tk.ACTIVE)
+        self.user_list.config(state=tk.NORMAL)
         self.ser_button.config(state=tk.ACTIVE)
         self.user_list.update()
         self.ser_button.update()
