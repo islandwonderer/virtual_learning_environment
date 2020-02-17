@@ -69,9 +69,11 @@ class GuestManagementPage(tk.Frame):
         self.disconnect_flag = False
         self.user_list.config(state=tk.DISABLED)
         self.ser_button.config(state=tk.DISABLED)
-        self.toggle_button()
+        self.link_button.config(state=tk.DISABLED)
         self.user_list.update()
         self.ser_button.update()
+        self.link_button.update()
+        self.toggle_button()
         curr_vm = self.controller.vm
         curr_vm.start_instance()
         messagebox.showinfo("Warning",
@@ -82,11 +84,14 @@ class GuestManagementPage(tk.Frame):
             site = "http://" + curr_vm.get_instance_ip() + "/moodle"
             webbrowser.open(site)
             self.log_visit()
+            self.link_button.config(state=tk.ACTIVE)
+            self.link_button.update()
 
         except WaiterError:
             messagebox.showinfo("Warning",
                                 "There was a problem connecting to the remote computer. Please log out and try again"
                                 "in 5 minutes.", parent=self)
+            self.disconnect()
 
     def disconnect(self):
         curr_vm = self.controller.vm
