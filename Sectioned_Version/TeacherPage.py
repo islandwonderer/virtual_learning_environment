@@ -134,6 +134,7 @@ class TeacherPage(tk.Frame):
                 next(reader)
                 for user_list in reader:
                     user_csv_list.append(user_list)
+
             # Sets up the progress bar
             self.csv_progress['maximum'] = len(user_csv_list)*2
             bar = 0
@@ -142,9 +143,11 @@ class TeacherPage(tk.Frame):
             for new_user in user_csv_list:
                 if new_user:
                     if gt.user_by_id(int(new_user[0])) is None:
-                        success = gt.create_single_user(new_user[0].strip(), new_user[1].strip(), new_user[2].strip(), new_user[3].strip())
+                        success = gt.create_single_user(new_user[0].strip(), new_user[1].strip(), new_user[2].strip(),
+                                                        new_user[3].strip())
                         if not success[1]:
-                            messagebox.showinfo("Warning", "Unable to notify user {0} of their account's password.".format(new_user[0]), parent=self)
+                            messagebox.showinfo("Warning", "Unable to notify user {0} of their account's password."
+                                                .format(new_user[0]), parent=self)
                 bar += 1
                 self.csv_progress["value"] = bar
                 self.csv_progress.update()
@@ -163,6 +166,7 @@ class TeacherPage(tk.Frame):
             self.csv_progress["value"] = 0
             self.csv_progress.update()
         else:
-            messagebox.showinfo("Missing Info", "You need to first load a .csv file and provide a valid AMI.", parent=self)
+            messagebox.showinfo("Missing Info", "You need to first load a .csv file and provide a valid AMI.",
+                                parent=self)
         self.clear_multi_user_fields()
         self.activate_buttons()

@@ -31,7 +31,8 @@ class LoginPage(tk.Frame):
                     self.controller.user = user
                     self.controller.show_frame("StudentPage")
                 else:
-                    messagebox.showinfo("Warning", "Your Account Has Been Suspended. Please Contact Instructor", parent=self)
+                    messagebox.showinfo("Warning", "Your Account Has Been Suspended. Please Contact Instructor",
+                                        parent=self)
             else:
                 self.controller.show_frame("TeacherPage")
         else:

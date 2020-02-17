@@ -60,8 +60,10 @@ class UserManagementPage(tk.Frame):
         self.web_site.bind("<Button-1>", lambda e: self.open_site())
         user_opt_frame = tk.Frame(self)
         user_opt_frame.grid(row=15, column=2, sticky=tk.NSEW, padx=10)
-        self.upd_button = tk.Button(user_opt_frame, text="Update", command=lambda: self.update_user(), state=tk.DISABLED)
-        self.del_button = tk.Button(user_opt_frame, text="Delete", command=lambda: self.delete_user(), state=tk.DISABLED)
+        self.upd_button = tk.Button(user_opt_frame, text="Update", command=lambda: self.update_user(),
+                                    state=tk.DISABLED)
+        self.del_button = tk.Button(user_opt_frame, text="Delete", command=lambda: self.delete_user(),
+                                    state=tk.DISABLED)
         self.upd_button.pack(side=tk.RIGHT)
         self.del_button.pack(side=tk.RIGHT)
 
@@ -97,7 +99,9 @@ class UserManagementPage(tk.Frame):
 
     def open_site(self):
         global vm
-        messagebox.showinfo("Warning", "This process may take a while. A window will open on your browser when it's ready.", parent=self)
+        messagebox.showinfo("Warning",
+                            "This process may take a while. A window will open on your browser when it's ready.",
+                            parent=self)
         curr_user = self.selected_user
         if curr_user.assigned_VM is not None:
             vm = gt.get_vm_object(curr_user.assigned_VM)
@@ -126,8 +130,8 @@ class UserManagementPage(tk.Frame):
         if curr_user.isTeacher is False:
             curr_vm = gt.get_vm_object(curr_user.assigned_VM)
             user_response = messagebox.askokcancel("Delete", "Are you sure you want to delete this user? "
-                                                           "This will result in the irreversible deletion of the "
-                                                           "associated VM.", parent=self)
+                                                   "This will result in the irreversible deletion of the "
+                                                   "associated VM.", parent=self)
             if user_response is False:
                 print("Canceled")
 

@@ -112,7 +112,8 @@ class GuestManagementPage(tk.Frame):
         self.curr_user.add_to_log(date_stamp, (user.firstName + user.lastName))
         gt.save_user(self.curr_user)
         subject = "Notification of VM Access"
-        message = "{},\n The following is to notify you that {} {} accessed your VM on {}. If something has changed in" \
+        message = "{},\n The following is to notify you that {} {} accessed your VM on {}. " \
+                  "If something has changed in" \
                   "your configuration notify " \
                   "an instructor at your earliest continence.".format(self.curr_user.firstName, user.firstName,
                                                                       user.lastName, date_stamp)

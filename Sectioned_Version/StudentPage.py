@@ -42,15 +42,18 @@ class StudentPage(tk.Frame):
         # Sites Sections
         link_label = tk.Label(self, text="VM Links")
         link_label.grid(row=5, column=1, sticky='NSEW')
-        self.moo_button = tk.Button(self, text="Moodle", command=lambda: self.open_page(self.moodle_site), state=tk.DISABLED)
+        self.moo_button = tk.Button(self, text="Moodle", command=lambda: self.open_page(self.moodle_site),
+                                    state=tk.DISABLED)
         self.moo_button.grid(row=6, column=1, pady=12)
         self.moo_info = tk.Message(self, text=self.config['mood_info'], width=165, font=(None, 10))
         self.moo_info.grid(row=6, column=2, sticky=tk.W)
-        self.php_button = tk.Button(self, text="phpAdmin", command=lambda: self.open_page(self.php_my_admin_site), state=tk.DISABLED)
+        self.php_button = tk.Button(self, text="phpAdmin", command=lambda: self.open_page(self.php_my_admin_site),
+                                    state=tk.DISABLED)
         self.php_button.grid(row=7, column=1, pady=12)
         self.php_info = tk.Message(self, text=self.config['php_info'], width=165, font=(None, 10))
         self.php_info.grid(row=7, column=2, sticky=tk.W)
-        self.ftp_button = tk.Button(self, text="FTP", command=lambda: self.open_page(self.ftp_site),  state=tk.DISABLED)
+        self.ftp_button = tk.Button(self, text="FTP", command=lambda: self.open_page(self.ftp_site),
+                                    state=tk.DISABLED)
         self.ftp_button.grid(row=8, column=1, pady=12)
         self.ftp_info = tk.Message(self, text=self.config['ftp_info'], width=165, font=(None, 10))
         self.ftp_info.grid(row=8, column=2, sticky=tk.W)
@@ -62,7 +65,8 @@ class StudentPage(tk.Frame):
         # Guest Visit Section
         vis_label = tk.Label(self, text="Other Class VMs")
         vis_label.grid(row=10, column=2, sticky="W", padx=10, pady=12)
-        self.vis_button = tk.Button(self, text="Visit", command=lambda: self.controller.show_frame("GuestManagementPage"))
+        self.vis_button = tk.Button(self, text="Visit",
+                                    command=lambda: self.controller.show_frame("GuestManagementPage"))
         self.vis_button.grid(row=10, column=2, sticky="E", padx=10, pady=12)
 
         # Threads
