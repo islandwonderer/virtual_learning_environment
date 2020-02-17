@@ -3,4 +3,3 @@ venv/
 .idea/
 config.json
 Progress.txt
-gateway.db-journal
