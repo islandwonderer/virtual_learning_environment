@@ -288,7 +288,7 @@ class TeacherPage(tk.Frame):
             for curr_user in gt.get_list_users():
                 if not curr_user.isTeacher:
                     curr_vm = gt.get_vm_object(curr_user.assigned_VM)
-                    curr_vm.isInstanceReady()
+                    curr_vm.is_instance_ready()
                     curr_vm.stopInstance()
                     bar += 1
                 self.csv_progress["value"] = bar

@@ -102,7 +102,7 @@ class UserManagementPage(tk.Frame):
         if curr_user.assigned_VM is not None:
             vm = gt.get_vm_object(curr_user.assigned_VM)
             vm.startInstance()
-            vm.isInstanceReady()
+            vm.is_instance_ready()
             site = "http://" + vm.getInstaceIP() + "/moodle"
             webbrowser.open(site)
         else:

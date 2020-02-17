@@ -10,8 +10,6 @@ from Sectioned_Version.VMManagementPage import VMManagementPage
 from Sectioned_Version.SettingsPage import SettingsPage
 
 
-
-
 class EdEnvApp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
@@ -35,22 +33,18 @@ class EdEnvApp(tk.Tk):
             frame.grid(row=0, column=0, sticky=tk.NSEW)
 
         self.show_frame("LoginPage")
-        # self.show_frame("TeacherPage")
-        # self.show_frame("StudentPage")
-        # self.show_frame("UserManagementPage")
-        # self.show_frame("GuestManagementPage")
-        # self.show_frame("VMManagementPage")
-        # self.show_frame("SettingsPage")
 
     def show_frame(self, page_name):
-        # Show a frame for the given page name
+        # Select frame
         frame = self.frames[page_name]
         # Refresh the list if it has a list.
         if frame.has_list is True:
             frame.update_list()
+        # Display Frame
         frame.tkraise()
 
     def shut_down(self):
+        # Prevents VM's to remain running when user exits
         if messagebox.askokcancel("Exit", "Are you sure you want to exit?", parent=self):
             if self.vm:
                 self.vm.stopInstance()

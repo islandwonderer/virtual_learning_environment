@@ -65,6 +65,10 @@ class StudentPage(tk.Frame):
         self.vis_button = tk.Button(self, text="Visit", command=lambda: self.controller.show_frame("GuestManagementPage"))
         self.vis_button.grid(row=10, column=2, sticky="E", padx=10, pady=12)
 
+        # Threads
+        self.check = Thread(target=self.check_status)
+        self.display = Thread(target=self.display_progress)
+
     def set_ready(self):
         messagebox.showinfo("Ready", "Your instance is ready!", parent=self)
         self.start_button.config(text="LogOut", command=lambda: self.log_out())
@@ -83,7 +87,7 @@ class StudentPage(tk.Frame):
         vm = self.controller.vm
         self.start_button.config(state=tk.DISABLED)
         self.start_button.update()
-        vm.isInstanceReady()
+        vm.is_instance_ready()
         self.instanceIsReady = True
         self.set_ready()
 
@@ -92,20 +96,30 @@ class StudentPage(tk.Frame):
         current_time = 0
         self.load_progress.place()
         self.load_progress['maximum'] = self.waitTime
-        while self.instanceIsReady is False:
+        while self.instanceIsReady is False and current_time is not self.waitTime:
             current_time += 1
             self.load_progress["value"] = current_time
             self.load_progress.update()
             time.sleep(1)
 
     def start_check(self):
-        check = Thread(target=self.check_status)
-        display = Thread(target=self.display_progress)
-        check.start()
-        display.start()
+        self.check.start()
+        self.display.start()
+
+    def reset_page(self):
+        self.start_button.config(text="Start", command=self.start_check)
+        self.load_progress["value"] = 0
+        self.load_progress.update()
+        self.moo_button.config(state=tk.DISABLED)
+        self.php_button.config(state=tk.DISABLED)
+        self.ftp_button.config(state=tk.DISABLED)
+        self.moodle_site = ""
+        self.php_my_admin_site = ""
+        self.ftp_site = ""
 
     def log_out(self):
         self.controller.vm.stopInstance()
+        self.reset_page()
         self.controller.show_frame("LoginPage")
 
     @staticmethod

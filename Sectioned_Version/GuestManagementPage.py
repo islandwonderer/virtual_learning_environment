@@ -40,7 +40,7 @@ class GuestManagementPage(tk.Frame):
         self.user_list.bind('<<ListboxSelect>>', self.on_select)
 
         # Connect Button
-        self.link_button = tk.Button(self, text="Goto Page", command=lambda: self.connect, state=tk.DISABLED)
+        self.link_button = tk.Button(self, text="Goto Page", command=lambda: self.connect(), state=tk.DISABLED)
         self.link_button.grid(row=23, column=2, sticky=tk.E, padx=10, pady=3)
 
     def update_list(self):
@@ -55,16 +55,20 @@ class GuestManagementPage(tk.Frame):
 
     def on_select(self, event):
         widget = event.widget
-        self.curr_user = widget.curselection()[0]
+        index = widget.curselection()[0]
+        self.curr_user = self.users[index]
+        # Sets the VM globally in case of shutdown of app
+        self.controller.vm = gt.get_vm_object(self.curr_user.assigned_VM)
         self.link_button.config(state=tk.ACTIVE)
         self.link_button.update()
 
     def connect(self):
-        curr_vm = gt.get_vm_object(self.curr_user.assigned_VM)
+        curr_vm = self.controller.vm
         curr_vm.startInstance()
         messagebox.showinfo("Warning",
-                            "This process may take while. A window will open on your browser when its ready.", parent=self)
-        curr_vm.isInstanceReady()
+                            "This process may take while. A window will open on your browser when its ready.",
+                            parent=self)
+        curr_vm.is_instance_ready()
         site = "http://" + curr_vm.getInstaceIP() + "/moodle"
         webbrowser.open(site)
         self.toggle_button()
@@ -81,8 +85,10 @@ class GuestManagementPage(tk.Frame):
         self.disconnect()
 
     def disconnect(self):
-        curr_vm = gt.get_vm_object(self.curr_user.assigned_VM)
+        curr_vm = self.controller.vm
         curr_vm.stopInstance()
+        # Returns Global VM to Users
+        self.controller.vm = gt.get_vm_object(self.controller.user.assigned_VM)
         self.toggle_button()
         self.user_list.config(state=tk.ACTIVE)
         self.ser_button.config(state=tk.ACTIVE)
@@ -92,16 +98,17 @@ class GuestManagementPage(tk.Frame):
     def toggle_button(self):
         if self.is_toggled is False:
             self.is_toggled = True
-            self.link_button.config(text="Disconnect", command=lambda: self.disconnect)
+            self.link_button.config(text="Disconnect", command=lambda: self.disconnect())
             self.link_button.update()
         else:
             self.is_toggled = False
-            self.link_button.config(text="Connect", command=lambda: self.connect)
+            self.link_button.config(text="Connect", command=lambda: self.connect())
             self.link_button.update()
 
     def log_visit(self):
-        global user
+        user = self.controller.user
         date_stamp = datetime.datetime.now()
+        date_stamp = date_stamp.strftime("%d-%b-%Y (%H:%M:%S.%f)")
         self.curr_user.addToLog(date_stamp, (user.firstName + user.lastName))
         gt.save_user(self.curr_user)
         subject = "Notification of VM Access"

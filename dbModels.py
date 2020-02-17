@@ -138,7 +138,7 @@ class dbComputer(Base):
         return self.InstanceId
 
     # Must implement some kind of timeout. /Check if function "wait" has a time out/
-    def isInstanceReady(self):
+    def is_instance_ready(self):
         waiter = client.get_waiter('instance_status_ok')
         waiter.wait(InstanceIds=[self.InstanceId])
         return True

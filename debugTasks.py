@@ -37,7 +37,7 @@ def display_db():
 
 def check_status(this_instance):
     global instanceIsReady
-    this_instance.isInstanceReady()
+    this_instance.is_instance_ready()
     instanceIsReady = True
     return
 
