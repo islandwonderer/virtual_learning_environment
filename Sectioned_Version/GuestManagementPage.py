@@ -2,8 +2,8 @@ import tkinter as tk
 import Gateway as gt
 import webbrowser
 from tkinter import messagebox
-import time
 import datetime
+from botocore.exceptions import WaiterError
 
 
 class GuestManagementPage(tk.Frame):
@@ -16,6 +16,7 @@ class GuestManagementPage(tk.Frame):
         self.curr_user = None
         self.is_toggled = False
         self.has_list = True
+        self.disconnect_flag = False
 
         # Label and Nav
         top_label = tk.Label(self, text="Guest Access:", font=controller.title_font)
@@ -40,7 +41,8 @@ class GuestManagementPage(tk.Frame):
         self.user_list.bind('<<ListboxSelect>>', self.on_select)
 
         # Connect Button
-        self.link_button = tk.Button(self, text="Goto Page", command=lambda: self.connect(), state=tk.DISABLED)
+        self.link_button = tk.Button(self, text="Goto Page", command=lambda: self.connect(),
+                                     state=tk.DISABLED)
         self.link_button.grid(row=23, column=2, sticky=tk.E, padx=10, pady=3)
 
     def update_list(self):
@@ -57,38 +59,43 @@ class GuestManagementPage(tk.Frame):
         widget = event.widget
         index = widget.curselection()[0]
         self.curr_user = self.users[index]
+
         # Sets the VM globally in case of shutdown of app
         self.controller.vm = gt.get_vm_object(self.curr_user.assigned_VM)
         self.link_button.config(state=tk.ACTIVE)
         self.link_button.update()
 
     def connect(self):
+        self.disconnect_flag = False
+        self.user_list.config(state=tk.DISABLED)
+        self.ser_button.config(state=tk.DISABLED)
+        self.toggle_button()
+        self.user_list.update()
+        self.ser_button.update()
         curr_vm = self.controller.vm
         curr_vm.start_instance()
         messagebox.showinfo("Warning",
                             "This process may take while. A window will open on your browser when its ready.",
                             parent=self)
-        curr_vm.is_instance_ready()
-        site = "http://" + curr_vm.get_instance_ip() + "/moodle"
-        webbrowser.open(site)
-        self.toggle_button()
-        self.user_list.config(state=tk.DISABLED)
-        self.ser_button.config(state=tk.DISABLED)
-        self.user_list.update()
-        self.ser_button.update()
-        self.log_visit()
+        try:
+            curr_vm.is_instance_ready()
+            site = "http://" + curr_vm.get_instance_ip() + "/moodle"
+            webbrowser.open(site)
+            self.log_visit()
 
-        # 15 minute evaluation time starts
-        time.sleep(900)
-
-        # Automatically Disconnect
-        self.disconnect()
+        except WaiterError:
+            messagebox.showinfo("Warning",
+                                "There was a problem connecting to the remote computer. Please log out and try again"
+                                "in 5 minutes.", parent=self)
 
     def disconnect(self):
         curr_vm = self.controller.vm
         curr_vm.stop_instance()
+        self.disconnect_flag = True
+
         # Returns Global VM to Users
         self.controller.vm = gt.get_vm_object(self.controller.user.assigned_VM)
+
         self.toggle_button()
         self.user_list.config(state=tk.ACTIVE)
         self.ser_button.config(state=tk.ACTIVE)
