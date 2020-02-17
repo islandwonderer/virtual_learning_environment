@@ -115,7 +115,7 @@ class TeacherPage(tk.Frame):
                 curr_user = gt.create_single_user(temp_id, first_name, last_name, e_mail)[0]
                 curr_vm = gt.get_vm_object(curr_user.assigned_VM)
                 curr_vm.is_instance_ready()
-                curr_vm.stopInstance()
+                curr_vm.stop_instance()
             else:
                 messagebox.showinfo("User Error", "This user already exist", parent=self)
         else:
@@ -154,7 +154,7 @@ class TeacherPage(tk.Frame):
                 if curr_user.isTeacher is False:
                     curr_vm = gt.get_vm_object(curr_user.assigned_VM)
                     curr_vm.is_instance_ready()
-                    curr_vm.stopInstance()
+                    curr_vm.stop_instance()
                     bar += 1
                 self.csv_progress["value"] = bar
                 self.csv_progress.update()

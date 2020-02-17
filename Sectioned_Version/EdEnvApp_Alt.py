@@ -47,7 +47,7 @@ class EdEnvApp(tk.Tk):
         # Prevents VM's to remain running when user exits
         if messagebox.askokcancel("Exit", "Are you sure you want to exit?", parent=self):
             if self.vm:
-                self.vm.stopInstance()
+                self.vm.stop_instance()
             self.destroy()
 
 

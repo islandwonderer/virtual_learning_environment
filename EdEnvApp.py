@@ -65,7 +65,7 @@ class LoginPage(tk.Frame):
             if not user.isTeacher:
                 vm = gt.get_vm_object(user.assigned_VM)
                 print(vm.InstanceId)
-                vm.startInstance()
+                vm.start_instance()
                 self.controller.show_frame("StudentPage")
 
             else:
@@ -289,7 +289,7 @@ class TeacherPage(tk.Frame):
                 if not curr_user.isTeacher:
                     curr_vm = gt.get_vm_object(curr_user.assigned_VM)
                     curr_vm.is_instance_ready()
-                    curr_vm.stopInstance()
+                    curr_vm.stop_instance()
                     bar += 1
                 self.csv_progress["value"] = bar
                 self.csv_progress.update()

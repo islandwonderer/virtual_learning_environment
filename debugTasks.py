@@ -7,8 +7,8 @@ import json
 
 def add_teacher(first, last, t_id, email):
     teacher = db.dbUser(first, last, t_id, email)
-    teacher.setAutoUserName()
-    teacher.setCustPassword("TestPass")
+    teacher.set_auto_user_name()
+    teacher.set_custom_password("TestPass")
     teacher.isTeacher = True
     gt.gateway_ses.add(teacher)
     gt.gateway_ses.commit()

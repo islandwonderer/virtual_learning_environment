@@ -41,53 +41,53 @@ class dbUser(Base):
         self.userName = self.studentID
 
     # This function creates a user_name from the student ID
-    def setAutoUserName(self):
+    def set_auto_user_name(self):
         self.userName = self.studentID
 
     # This function creates a random password of 8 characters.
-    def setAutoPassword(self, size = 8, chars=string.ascii_letters + string.digits + string.punctuation):
+    def set_auto_password(self, size = 8, chars=string.ascii_letters + string.digits + string.punctuation):
         unencrypted_password = ''.join(random.choice(chars) for _ in range(size))
         salt = bcrypt.gensalt()
         hatch = bcrypt.hashpw(unencrypted_password.encode('utf-8'), salt)
         self.password = hatch
         return unencrypted_password
 
-    def setCustUserName(self, uN):
+    def set_custom_user_name(self, uN):
         self.userName = uN
 
-    def setCustPassword(self, pW):
+    def set_custom_password(self, pW):
         salt = bcrypt.gensalt()
         hatch = bcrypt.hashpw(pW.encode('utf-8'), salt)
         self.password = hatch
 
-    def setSuspention(self, bool):
+    def set_suspension(self, bool):
         self.isSuspended = bool
 
-    def setTeacher(self, bool):
+    def set_teacher(self, bool):
         self.isTeacher = bool
 
-    def getSuspention(self):
+    def get_suspension(self):
         return self.isSuspended
 
-    def getTeacher(self):
+    def get_teacher(self):
         return self.isTeacher
 
-    def getPassword(self):
+    def get_password(self):
         return self.password
 
-    def getUserName(self):
+    def get_user_name(self):
         return self.userName
 
-    def getLog(self):
+    def get_log(self):
         return json.loads(self.visitorsLog)
 
-    def setLog(self, dict_json):
+    def set_log(self, dict_json):
         self.visitorsLog = json.dumps(dict_json)
 
-    def addToLog(self, key, value):
-        dict_log = self.getLog()
+    def add_to_log(self, key, value):
+        dict_log = self.get_log()
         dict_log[key] = value
-        self.setLog(dict_log)
+        self.set_log(dict_log)
 
 
 class dbComputer(Base):
@@ -108,15 +108,15 @@ class dbComputer(Base):
         self.instanceObject = instance[0]
         self.InstanceId = self.instanceObject.id
 
-    def startInstance(self):
+    def start_instance(self):
         client.start_instances(InstanceIds=[self.InstanceId])
         start = time.time()
-        self.addToLog("Start Time", start)
+        self.add_to_log("Start Time", start)
 
-    def stopInstance(self):
+    def stop_instance(self):
         client.stop_instances(InstanceIds=[self.InstanceId])
         # end = time.time()
-        log = self.getLog()
+        log = self.get_log()
         end = time.time()
         start = log["Start Time"]
         duration = end - start
@@ -124,17 +124,17 @@ class dbComputer(Base):
             onTime = log["On Time"]
             onTime.append(duration)
             log["On Time"] = onTime
-        self.setLog(log)
+        self.set_log(log)
 
-    def deleteInstace(self):
+    def delete_instance(self):
         client.terminate_instances(InstanceIds=[self.InstanceId])
 
-    def getInstaceIP(self):
+    def get_instance_ip(self):
         instance = ec2.Instance(self.InstanceId)
         self.InstanceIpAddress = instance.public_ip_address
         return self.InstanceIpAddress
 
-    def getInstaceID(self):
+    def get_instance_id(self):
         return self.InstanceId
 
     # Must implement some kind of timeout. /Check if function "wait" has a time out/
@@ -143,30 +143,30 @@ class dbComputer(Base):
         waiter.wait(InstanceIds=[self.InstanceId])
         return True
 
-    def getUpTime(self):
-        log = self.getLog()
+    def get_up_time(self):
+        log = self.get_log()
         logTimes = log["On Time"]
         totalUpTime = 0
         for period in logTimes:
             totalUpTime += period
         return totalUpTime
 
-    def getLog(self):
+    def get_log(self):
         log = self.InstanceLog
         if log is not None:
             return json.loads(log)
         else:
             return {}
 
-    def setLog(self, dict_json):
+    def set_log(self, dict_json):
         self.InstanceLog = json.dumps(dict_json)
 
-    def addToLog(self, key, value):
-        dict_log = self.getLog()
+    def add_to_log(self, key, value):
+        dict_log = self.get_log()
         dict_log[key] = value
-        self.setLog(dict_log)
+        self.set_log(dict_log)
 
-    def getInfo(self):
+    def get_info(self):
         response = client.describe_instances(InstanceIds=[self.InstanceId])
         return response
 

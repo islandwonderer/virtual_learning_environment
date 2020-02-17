@@ -71,7 +71,7 @@ class VMManagementPage(tk.Frame):
         widget = event.widget
         index = widget.curselection()[0]
         self.selected_vm = gt.get_vm_object(self.user_list[index].assigned_VM)
-        info = self.selected_vm.getInfo()
+        info = self.selected_vm.get_info()
         self.ami_out.config(text=info['Reservations'][0]['Instances'][0]['ImageId'])
         self.owner_out.config(text=(self.user_list[index].firstName + " " + self.user_list[index].lastName))
         self.status_out.config(text=info['Reservations'][0]['Instances'][0]['State']['Name'])
@@ -81,19 +81,19 @@ class VMManagementPage(tk.Frame):
 
     def power(self, status):
         if status == "ON":
-            self.selected_vm.startInstance()
+            self.selected_vm.start_instance()
         elif status == "OFF":
-            self.selected_vm.stopInstance()
+            self.selected_vm.stop_instance()
 
     def power_all(self):
         for vm_user in self.user_list:
             curr_vm = gt.get_vm_object(vm_user.assigned_VM)
-            curr_vm.startInstance()
+            curr_vm.start_instance()
 
     def shutdown_all(self):
         for vm_user in self.user_list:
             curr_vm = gt.get_vm_object(vm_user.assigned_VM)
-            curr_vm.stopInstance()
+            curr_vm.stop_instance()
 
     def update_list(self):
         self.vm_list.delete(0, tk.END)
@@ -104,7 +104,7 @@ class VMManagementPage(tk.Frame):
 
     def download(self, vm):
         file = asksaveasfilename(initialdir="/", title="Save File", filetypes={("JSON files", "*.json")})
-        log = vm.getLog()
+        log = vm.get_log()
         try:
             if file.endswith(".json"):
                 with open(file, 'w') as json_file:

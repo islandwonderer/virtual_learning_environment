@@ -101,9 +101,9 @@ class UserManagementPage(tk.Frame):
         curr_user = self.selected_user
         if curr_user.assigned_VM is not None:
             vm = gt.get_vm_object(curr_user.assigned_VM)
-            vm.startInstance()
+            vm.start_instance()
             vm.is_instance_ready()
-            site = "http://" + vm.getInstaceIP() + "/moodle"
+            site = "http://" + vm.get_instance_ip() + "/moodle"
             webbrowser.open(site)
         else:
             messagebox.showinfo("Warning", "This is a teacher and does not have a VM assigned.", parent=self)
@@ -111,12 +111,12 @@ class UserManagementPage(tk.Frame):
     def update_user(self):
         curr_user = self.selected_user
         curr_user.studentID = self.id_entry.get()
-        curr_user.setCustUserName(curr_user.studentID)
+        curr_user.set_custom_user_name(curr_user.studentID)
         curr_user.firstName = self.fn_entry.get()
         curr_user.lastName = self.ln_entry.get()
         curr_user.eMail = self.email_entry.get()
         if self.pass_entry.get():
-            curr_user.setCustPassword(self.pass_entry.get())
+            curr_user.set_custom_password(self.pass_entry.get())
         gt.save_user(curr_user)
         self.update_list()
         messagebox.showinfo("Update", "The user information has been updated.", parent=self)

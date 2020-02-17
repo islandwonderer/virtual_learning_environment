@@ -64,12 +64,12 @@ class GuestManagementPage(tk.Frame):
 
     def connect(self):
         curr_vm = self.controller.vm
-        curr_vm.startInstance()
+        curr_vm.start_instance()
         messagebox.showinfo("Warning",
                             "This process may take while. A window will open on your browser when its ready.",
                             parent=self)
         curr_vm.is_instance_ready()
-        site = "http://" + curr_vm.getInstaceIP() + "/moodle"
+        site = "http://" + curr_vm.get_instance_ip() + "/moodle"
         webbrowser.open(site)
         self.toggle_button()
         self.user_list.config(state=tk.DISABLED)
@@ -86,7 +86,7 @@ class GuestManagementPage(tk.Frame):
 
     def disconnect(self):
         curr_vm = self.controller.vm
-        curr_vm.stopInstance()
+        curr_vm.stop_instance()
         # Returns Global VM to Users
         self.controller.vm = gt.get_vm_object(self.controller.user.assigned_VM)
         self.toggle_button()
@@ -109,7 +109,7 @@ class GuestManagementPage(tk.Frame):
         user = self.controller.user
         date_stamp = datetime.datetime.now()
         date_stamp = date_stamp.strftime("%d-%b-%Y (%H:%M:%S.%f)")
-        self.curr_user.addToLog(date_stamp, (user.firstName + user.lastName))
+        self.curr_user.add_to_log(date_stamp, (user.firstName + user.lastName))
         gt.save_user(self.curr_user)
         subject = "Notification of VM Access"
         message = "{},\n The following is to notify you that {} {} accessed your VM on {}. If something has changed in" \

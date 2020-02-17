@@ -27,7 +27,7 @@ class LoginPage(tk.Frame):
             if user.isTeacher is False:
                 if user.isSuspended is False:
                     self.controller.vm = gt.get_vm_object(user.assigned_VM)
-                    self.controller.vm.startInstance()
+                    self.controller.vm.start_instance()
                     self.controller.user = user
                     self.controller.show_frame("StudentPage")
                 else:

@@ -34,7 +34,7 @@ def get_vm_object(vm_id):
 
 
 def del_vm(vm_obj):
-    vm_obj.deleteInstace()
+    vm_obj.delete_instance()
     gateway_ses.delete(vm_obj)
     gateway_ses.commit()
 
@@ -62,14 +62,14 @@ def load_config():
 def create_single_user(u_id, first, last, email):
     if user_by_id(u_id) is None:
         new_user = db.dbUser(first, last, u_id, email)
-        password = new_user.setAutoPassword()
+        password = new_user.set_auto_password()
         new_instance = create_vm()
         new_user.assigned_VM = new_instance.InstanceId
         date_stamp = dt.datetime.now().strftime("%d-%b-%Y (%H:%M:%S.%f)")
         start_log = {'Created': date_stamp}
         instance_log = {'Created': date_stamp,'Start Time': time.time(), 'On Time': []}
-        new_instance.setLog(instance_log)
-        new_user.setLog(start_log)
+        new_instance.set_log(instance_log)
+        new_user.set_log(start_log)
         gateway_ses.add(new_user)
         gateway_ses.add(new_instance)
         gateway_ses.commit()
