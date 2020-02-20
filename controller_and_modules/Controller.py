@@ -1,5 +1,5 @@
 import smtplib
-from controller_and_modules import dbModels as db
+from controller_and_modules import dbModels as dB
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from controller_and_modules.dbModels import Session
@@ -16,20 +16,20 @@ default_port = ""
 
 gateway_ses = Session()
 
-config_file = "/Users/mac/Desktop/Capstone_Alt/controller_and_modules/config.json"
+config_file = "controller_and_modules/config.json"
 
 
 # VM Management
 def create_vm():
     sc = load_config()
-    new_instance = db.dbComputer(sc["AMI"], sc["instance_type"], sc["key_name"], [sc["security_group_id"]])
+    new_instance = dB.dbComputer(sc["AMI"], sc["instance_type"], sc["key_name"], [sc["security_group_id"]])
     gateway_ses.add(new_instance)
     gateway_ses.commit()
     return new_instance
 
 
 def get_vm_object(vm_id):
-    for vm in gateway_ses.query(db.dbComputer):
+    for vm in gateway_ses.query(dB.dbComputer):
         if vm.InstanceId == vm_id:
             return vm
     return None
@@ -43,7 +43,7 @@ def del_vm(vm_obj):
 
 # Session Management
 def verify_user(username, password):
-    for user in gateway_ses.query(db.dbUser):
+    for user in gateway_ses.query(dB.dbUser):
         if user.studentID == username and bcrypt.checkpw(password.encode('utf-8'), user.password):
             return True
     return False
@@ -63,7 +63,7 @@ def load_config():
 # User Management
 def create_single_user(u_id, first, last, email):
     if user_by_id(u_id) is None:
-        new_user = db.dbUser(first, last, u_id, email)
+        new_user = dB.dbUser(first, last, u_id, email)
         password = new_user.set_auto_password()
         new_instance = create_vm()
         new_user.assigned_VM = new_instance.InstanceId
@@ -84,14 +84,14 @@ def create_single_user(u_id, first, last, email):
 
 
 def user_by_id(u_id):
-    for user in gateway_ses.query(db.dbUser):
+    for user in gateway_ses.query(dB.dbUser):
         if user.studentID == u_id:
             return user
     return None
 
 
 def user_by_name(name):
-    for user in gateway_ses.query(db.dbUser):
+    for user in gateway_ses.query(dB.dbUser):
         if user.firstName == name:
             return user
     return None
@@ -99,7 +99,7 @@ def user_by_name(name):
 
 def get_list_users():
     user_list = []
-    for user in gateway_ses.query(db.dbUser):
+    for user in gateway_ses.query(dB.dbUser):
         user_list.append(user)
     user_list.sort(key=lambda e: e.lastName)
     print(user_list)
