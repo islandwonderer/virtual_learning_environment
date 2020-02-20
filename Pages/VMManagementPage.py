@@ -5,7 +5,7 @@ from tkinter import messagebox
 import json
 
 # Local Imports
-from Controllers import Controller as cT
+from Controller_and_Modules import Controller as cT
 
 
 class VMManagementPage(tk.Frame):

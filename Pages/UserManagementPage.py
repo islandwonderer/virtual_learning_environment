@@ -4,7 +4,7 @@ from tkinter import messagebox
 import webbrowser
 
 # Local Imports
-from Controllers import Controller as cT
+from Controller_and_Modules import Controller as cT
 
 
 class UserManagementPage(tk.Frame):

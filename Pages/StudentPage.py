@@ -7,7 +7,7 @@ from threading import Thread
 import time
 
 # Local Imports
-from Controllers import Controller as cT
+from Controller_and_Modules import Controller as cT
 
 
 class StudentPage(tk.Frame):

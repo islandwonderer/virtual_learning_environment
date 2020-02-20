@@ -1,6 +1,9 @@
+# Imported Packages
 import tkinter as tk
 from tkinter import font as tkFont
 from tkinter import messagebox
+
+# Local Imports
 from Pages.UserManagementPage import UserManagementPage
 from Pages.TeacherPage import TeacherPage
 from Pages.StudentPage import StudentPage

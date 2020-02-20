@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import messagebox
 
 # Local Imports
-from Controllers import Controller as cT
+from Controller_and_Modules import Controller as cT
 
 
 class LoginPage(tk.Frame):

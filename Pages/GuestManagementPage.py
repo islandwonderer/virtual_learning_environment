@@ -6,7 +6,7 @@ import datetime
 from botocore.exceptions import WaiterError
 
 # Local Imports
-from Controllers import Controller as cT
+from Controller_and_Modules import Controller as cT
 
 
 class GuestManagementPage(tk.Frame):
