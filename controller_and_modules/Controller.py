@@ -1,8 +1,8 @@
 import smtplib
-from Controller_and_Modules import dbModels as db
+from controller_and_modules import dbModels as db
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from Controller_and_Modules.dbModels import Session
+from controller_and_modules.dbModels import Session
 import json
 import datetime as dt
 import bcrypt
@@ -16,7 +16,7 @@ default_port = ""
 
 gateway_ses = Session()
 
-config_file = "/Users/mac/Desktop/Capstone_Alt/Controller_and_Modules/config.json"
+config_file = "/Users/mac/Desktop/Capstone_Alt/controller_and_modules/config.json"
 
 
 # VM Management

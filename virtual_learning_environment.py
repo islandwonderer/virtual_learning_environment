@@ -4,13 +4,13 @@ from tkinter import font as tkFont
 from tkinter import messagebox
 
 # Local Imports
-from Pages.UserManagementPage import UserManagementPage
-from Pages.TeacherPage import TeacherPage
-from Pages.StudentPage import StudentPage
-from Pages.LoginPage import LoginPage
-from Pages.GuestManagementPage import GuestManagementPage
-from Pages.VMManagementPage import VMManagementPage
-from Pages.SettingsPage import SettingsPage
+from pages.UserManagementPage import UserManagementPage
+from pages.TeacherPage import TeacherPage
+from pages.StudentPage import StudentPage
+from pages.LoginPage import LoginPage
+from pages.GuestManagementPage import GuestManagementPage
+from pages.VMManagementPage import VMManagementPage
+from pages.SettingsPage import SettingsPage
 
 
 class VLE(tk.Tk):
