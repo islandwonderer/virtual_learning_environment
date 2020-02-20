@@ -1,10 +1,13 @@
+# Imported Packages
 import tkinter as tk
 from tkinter.ttk import *
-import Controller as gt
 from tkinter import messagebox
 import webbrowser
 from threading import Thread
 import time
+
+# Local Imports
+from Controllers import Controller as cT
 
 
 class StudentPage(tk.Frame):
@@ -17,7 +20,7 @@ class StudentPage(tk.Frame):
         self.has_list = False
 
         # Setup
-        self.config = gt.load_config()
+        self.config = cT.load_config()
         self.moodle_site = ""
         self.php_my_admin_site = ""
         self.ftp_site = ""

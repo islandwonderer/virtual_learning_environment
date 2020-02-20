@@ -1,7 +1,10 @@
+# Imported Packages
 import tkinter as tk
-from Controllers import Controller as gt
-import webbrowser
 from tkinter import messagebox
+import webbrowser
+
+# Local Imports
+from Controllers import Controller as cT
 
 
 class UserManagementPage(tk.Frame):
@@ -73,13 +76,13 @@ class UserManagementPage(tk.Frame):
             self.suspend_button.config(text="Enable")
             self.suspend_button.update()
             self.selected_user.isSuspended = False
-            gt.save_user(self.selected_user)
+            cT.save_user(self.selected_user)
         else:
             self.suspended = False
             self.suspend_button.config(text="Suspend")
             self.suspend_button.update()
             self.selected_user.isSuspended = True
-            gt.save_user(self.selected_user)
+            cT.save_user(self.selected_user)
 
     def on_select(self, event):
         widget = event.widget
@@ -104,7 +107,7 @@ class UserManagementPage(tk.Frame):
                             parent=self)
         curr_user = self.selected_user
         if curr_user.assigned_VM is not None:
-            vm = gt.get_vm_object(curr_user.assigned_VM)
+            vm = cT.get_vm_object(curr_user.assigned_VM)
             vm.start_instance()
             vm.is_instance_ready()
             site = "http://" + vm.get_instance_ip() + "/moodle"
@@ -121,14 +124,14 @@ class UserManagementPage(tk.Frame):
         curr_user.eMail = self.email_entry.get()
         if self.pass_entry.get():
             curr_user.set_custom_password(self.pass_entry.get())
-        gt.save_user(curr_user)
+        cT.save_user(curr_user)
         self.update_list()
         messagebox.showinfo("Update", "The user information has been updated.", parent=self)
 
     def delete_user(self):
         curr_user = self.selected_user
         if curr_user.isTeacher is False:
-            curr_vm = gt.get_vm_object(curr_user.assigned_VM)
+            curr_vm = cT.get_vm_object(curr_user.assigned_VM)
             user_response = messagebox.askokcancel("Delete", "Are you sure you want to delete this user? "
                                                    "This will result in the irreversible deletion of the "
                                                    "associated VM.", parent=self)
@@ -137,9 +140,9 @@ class UserManagementPage(tk.Frame):
 
             else:
                 # delete current user VM
-                gt.del_vm(curr_vm)
+                cT.del_vm(curr_vm)
                 # delete current user
-                gt.del_user(curr_user)
+                cT.del_user(curr_user)
                 # refresh the list of students
                 self.update_list()
 
@@ -165,5 +168,5 @@ class UserManagementPage(tk.Frame):
 
     @staticmethod
     def get_valid_users():
-        all_users = gt.get_list_users()
+        all_users = cT.get_list_users()
         return all_users

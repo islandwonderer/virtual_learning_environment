@@ -1,9 +1,12 @@
+# Imported Packages
 import tkinter as tk
-from tkinter.ttk import *
-from tkinter.filedialog import askopenfilename
-import csv
-from Controllers import Controller as gt
 from tkinter import messagebox
+from tkinter.filedialog import askopenfilename
+from tkinter.ttk import *
+import csv
+
+# Local Imports
+from Controllers import Controller as cT
 
 
 class TeacherPage(tk.Frame):
@@ -14,7 +17,7 @@ class TeacherPage(tk.Frame):
         self.controller = controller
         label = tk.Label(self, text="Teacher Interface:", font=controller.title_font)
         label.grid(row=1, column=1, pady=3, padx=10, sticky=tk.W)
-        self.config = gt.load_config()
+        self.config = cT.load_config()
         self.has_list = False
 
         # Management Buttons
@@ -111,9 +114,9 @@ class TeacherPage(tk.Frame):
         # Checks that all the fields are filled in.
         if temp_id != "" and e_mail != "" and first_name != "" and last_name != "":
             # Checks that user has not been previously added
-            if gt.user_by_id(temp_id) is None:
-                curr_user = gt.create_single_user(temp_id, first_name, last_name, e_mail)[0]
-                curr_vm = gt.get_vm_object(curr_user.assigned_VM)
+            if cT.user_by_id(temp_id) is None:
+                curr_user = cT.create_single_user(temp_id, first_name, last_name, e_mail)[0]
+                curr_vm = cT.get_vm_object(curr_user.assigned_VM)
                 curr_vm.is_instance_ready()
                 curr_vm.stop_instance()
             else:
@@ -142,8 +145,8 @@ class TeacherPage(tk.Frame):
             # Creates user and assigns vm
             for new_user in user_csv_list:
                 if new_user:
-                    if gt.user_by_id(int(new_user[0])) is None:
-                        success = gt.create_single_user(new_user[0].strip(), new_user[1].strip(), new_user[2].strip(),
+                    if cT.user_by_id(int(new_user[0])) is None:
+                        success = cT.create_single_user(new_user[0].strip(), new_user[1].strip(), new_user[2].strip(),
                                                         new_user[3].strip())
                         if not success[1]:
                             messagebox.showinfo("Warning", "Unable to notify user {0} of their account's password."
@@ -153,9 +156,9 @@ class TeacherPage(tk.Frame):
                 self.csv_progress.update()
 
             # waits for all machines to finish loading and shuts them down
-            for curr_user in gt.get_list_users():
+            for curr_user in cT.get_list_users():
                 if curr_user.isTeacher is False:
-                    curr_vm = gt.get_vm_object(curr_user.assigned_VM)
+                    curr_vm = cT.get_vm_object(curr_user.assigned_VM)
                     curr_vm.is_instance_ready()
                     curr_vm.stop_instance()
                     bar += 1

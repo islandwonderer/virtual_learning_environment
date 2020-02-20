@@ -10,7 +10,7 @@ from Pages.VMManagementPage import VMManagementPage
 from Pages.SettingsPage import SettingsPage
 
 
-class EdEnvApp(tk.Tk):
+class VirLearnEnviro(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
@@ -52,6 +52,6 @@ class EdEnvApp(tk.Tk):
 
 
 if __name__ == "__main__":
-    app = EdEnvApp()
+    app = VirLearnEnviro()
     app.protocol("WM_DELETE_WINDOW", app.shut_down)
     app.mainloop()

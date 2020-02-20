@@ -1,6 +1,9 @@
+# Imported Packages
 import tkinter as tk
-from Controllers import Controller as gt
 from tkinter import messagebox
+
+# Local Imports
+from Controllers import Controller as cT
 
 
 class LoginPage(tk.Frame):
@@ -22,11 +25,11 @@ class LoginPage(tk.Frame):
 
     def verify_login(self):
         user_id = int(self.unEntry.get())
-        if gt.verify_user(user_id, self.pwEntry.get()):
-            user = gt.user_by_id(user_id)
+        if cT.verify_user(user_id, self.pwEntry.get()):
+            user = cT.user_by_id(user_id)
             if user.isTeacher is False:
                 if user.isSuspended is False:
-                    self.controller.vm = gt.get_vm_object(user.assigned_VM)
+                    self.controller.vm = cT.get_vm_object(user.assigned_VM)
                     self.controller.vm.start_instance()
                     self.controller.user = user
                     self.controller.show_frame("StudentPage")

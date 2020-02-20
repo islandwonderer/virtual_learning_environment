@@ -1,8 +1,11 @@
+# Imported Packages
 import tkinter as tk
-import Controller as gt
-import json
 from tkinter.filedialog import asksaveasfilename
 from tkinter import messagebox
+import json
+
+# Local Imports
+from Controllers import Controller as cT
 
 
 class VMManagementPage(tk.Frame):
@@ -70,7 +73,7 @@ class VMManagementPage(tk.Frame):
     def on_select(self, event):
         widget = event.widget
         index = widget.curselection()[0]
-        self.selected_vm = gt.get_vm_object(self.user_list[index].assigned_VM)
+        self.selected_vm = cT.get_vm_object(self.user_list[index].assigned_VM)
         info = self.selected_vm.get_info()
         self.ami_out.config(text=info['Reservations'][0]['Instances'][0]['ImageId'])
         self.owner_out.config(text=(self.user_list[index].firstName + " " + self.user_list[index].lastName))
@@ -87,12 +90,12 @@ class VMManagementPage(tk.Frame):
 
     def power_all(self):
         for vm_user in self.user_list:
-            curr_vm = gt.get_vm_object(vm_user.assigned_VM)
+            curr_vm = cT.get_vm_object(vm_user.assigned_VM)
             curr_vm.start_instance()
 
     def shutdown_all(self):
         for vm_user in self.user_list:
-            curr_vm = gt.get_vm_object(vm_user.assigned_VM)
+            curr_vm = cT.get_vm_object(vm_user.assigned_VM)
             curr_vm.stop_instance()
 
     def update_list(self):
@@ -119,7 +122,7 @@ class VMManagementPage(tk.Frame):
     @staticmethod
     def get_valid_users():
         valid_users = []
-        all_users = gt.get_list_users()
+        all_users = cT.get_list_users()
         for user in all_users:
             if user.assigned_VM is not None:
                 valid_users.append(user)

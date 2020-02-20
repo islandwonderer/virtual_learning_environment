@@ -16,6 +16,8 @@ default_port = ""
 
 gateway_ses = Session()
 
+config_file = "/Users/mac/Desktop/Capstone_Alt/Controllers/config.json"
+
 
 # VM Management
 def create_vm():
@@ -48,12 +50,12 @@ def verify_user(username, password):
 
 
 def save_config(config):
-    with open('config.json', 'w') as file:
+    with open(config_file, 'w') as file:
         json.dump(config, file)
 
 
 def load_config():
-    with open('config.json', 'r') as file:
+    with open(config_file, 'r') as file:
         config = json.load(file)
     return config
 

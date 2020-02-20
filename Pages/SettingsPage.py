@@ -1,6 +1,9 @@
+# Imported Packages
 import tkinter as tk
-import Controller as gt
 from tkinter import messagebox
+
+# Local Imports
+from Controllers import Controller as cT
 
 
 class SettingsPage(tk.Frame):
@@ -10,7 +13,7 @@ class SettingsPage(tk.Frame):
         self.controller = controller
         label = tk.Label(self, text="Settings:", font=controller.title_font)
         label.grid(row=1, column=1, pady=3, padx=10, sticky=tk.W)
-        self.config = gt.load_config()
+        self.config = cT.load_config()
         self.has_list = False
 
         # VM Settings
@@ -89,7 +92,7 @@ class SettingsPage(tk.Frame):
         self.config["e_password"] = self.password_entry.get()
         self.config["smtp"] = self.smtp_entry.get()
         self.config["port"] = int(self.port_entry.get())
-        gt.save_config(self.config)
+        cT.save_config(self.config)
         self.controller.show_frame("TeacherPage")
 
     def load_settings(self):

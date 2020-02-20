@@ -1,9 +1,12 @@
+# Imported Libraries
 import tkinter as tk
-import Controller as gt
 import webbrowser
 from tkinter import messagebox
 import datetime
 from botocore.exceptions import WaiterError
+
+# Local Imports
+from Controllers import Controller as cT
 
 
 class GuestManagementPage(tk.Frame):
@@ -47,7 +50,7 @@ class GuestManagementPage(tk.Frame):
 
     def update_list(self):
         self.user_list.delete(0, tk.END)
-        self.users = gt.get_list_users()
+        self.users = cT.get_list_users()
         for user in self.users:
             if user.isTeacher is not None:
                 text = "{}, {}"
@@ -61,7 +64,7 @@ class GuestManagementPage(tk.Frame):
         self.curr_user = self.users[index]
 
         # Sets the VM globally in case of shutdown of app
-        self.controller.vm = gt.get_vm_object(self.curr_user.assigned_VM)
+        self.controller.vm = cT.get_vm_object(self.curr_user.assigned_VM)
         self.link_button.config(state=tk.ACTIVE)
         self.link_button.update()
 
@@ -99,7 +102,7 @@ class GuestManagementPage(tk.Frame):
         self.disconnect_flag = True
 
         # Returns Global VM to Users
-        self.controller.vm = gt.get_vm_object(self.controller.user.assigned_VM)
+        self.controller.vm = cT.get_vm_object(self.controller.user.assigned_VM)
 
         self.toggle_button()
         self.user_list.config(state=tk.NORMAL)
@@ -122,14 +125,14 @@ class GuestManagementPage(tk.Frame):
         date_stamp = datetime.datetime.now()
         date_stamp = date_stamp.strftime("%d-%b-%Y (%H:%M:%S.%f)")
         self.curr_user.add_to_log(date_stamp, (user.firstName + user.lastName))
-        gt.save_user(self.curr_user)
+        cT.save_user(self.curr_user)
         subject = "Notification of VM Access"
         message = "{},\n The following is to notify you that {} {} accessed your VM on {}. " \
                   "If something has changed in" \
                   "your configuration notify " \
                   "an instructor at your earliest continence.".format(self.curr_user.firstName, user.firstName,
                                                                       user.lastName, date_stamp)
-        gt.notify_user(self.curr_user, subject, message)
+        cT.notify_user(self.curr_user, subject, message)
 
     def search(self):
         term = self.ser_entry.get()
@@ -156,7 +159,7 @@ class GuestManagementPage(tk.Frame):
     @staticmethod
     def get_valid_users():
         valid_users = []
-        all_users = gt.get_list_users()
+        all_users = cT.get_list_users()
         for user in all_users:
             if user.assigned_VM is not None:
                 valid_users.append(user)
