@@ -1,5 +1,5 @@
 import tkinter as tk
-import Gateway as gt
+import Controller as gt
 from tkinter import messagebox
 
 

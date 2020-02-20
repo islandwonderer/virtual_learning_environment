@@ -1,5 +1,5 @@
 import tkinter as tk
-import Gateway as gt
+import Controller as gt
 import json
 from tkinter.filedialog import asksaveasfilename
 from tkinter import messagebox

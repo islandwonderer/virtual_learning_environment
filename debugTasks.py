@@ -1,8 +1,6 @@
-import Gateway as gt
-import dbModels as db
+from Controllers import Controller as gt, dbModels as db
 from threading import Thread
 import time
-import json
 
 
 def add_teacher(first, last, t_id, email):

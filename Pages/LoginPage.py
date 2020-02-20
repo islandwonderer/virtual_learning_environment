@@ -1,5 +1,5 @@
 import tkinter as tk
-import Gateway as gt
+from Controllers import Controller as gt
 from tkinter import messagebox
 
 
@@ -22,7 +22,7 @@ class LoginPage(tk.Frame):
 
     def verify_login(self):
         user_id = int(self.unEntry.get())
-        if gt.verify_session(user_id, self.pwEntry.get()):
+        if gt.verify_user(user_id, self.pwEntry.get()):
             user = gt.user_by_id(user_id)
             if user.isTeacher is False:
                 if user.isSuspended is False:

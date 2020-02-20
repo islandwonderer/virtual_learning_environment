@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter.ttk import *
 from tkinter.filedialog import askopenfilename
 import csv
-import Gateway as gt
+from Controllers import Controller as gt
 from tkinter import messagebox
 
 

@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter.ttk import *
-import Gateway as gt
+import Controller as gt
 from tkinter import messagebox
 import webbrowser
 from threading import Thread

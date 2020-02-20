@@ -1,13 +1,13 @@
 import tkinter as tk
 from tkinter import font as tkFont
 from tkinter import messagebox
-from Sectioned_Version.UserManagementPage import UserManagementPage
-from Sectioned_Version.TeacherPage import TeacherPage
-from Sectioned_Version.StudentPage import StudentPage
-from Sectioned_Version.LoginPage import LoginPage
-from Sectioned_Version.GuestManagementPage import GuestManagementPage
-from Sectioned_Version.VMManagementPage import VMManagementPage
-from Sectioned_Version.SettingsPage import SettingsPage
+from Pages.UserManagementPage import UserManagementPage
+from Pages.TeacherPage import TeacherPage
+from Pages.StudentPage import StudentPage
+from Pages.LoginPage import LoginPage
+from Pages.GuestManagementPage import GuestManagementPage
+from Pages.VMManagementPage import VMManagementPage
+from Pages.SettingsPage import SettingsPage
 
 
 class EdEnvApp(tk.Tk):

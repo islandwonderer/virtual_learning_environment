@@ -145,11 +145,11 @@ class dbComputer(Base):
 
     def get_up_time(self):
         log = self.get_log()
-        logTimes = log["On Time"]
-        totalUpTime = 0
-        for period in logTimes:
-            totalUpTime += period
-        return totalUpTime
+        log_times = log["On Time"]
+        total_up_time = 0
+        for period in log_times:
+            total_up_time += period
+        return total_up_time
 
     def get_log(self):
         log = self.InstanceLog

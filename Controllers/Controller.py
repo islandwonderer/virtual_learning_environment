@@ -1,8 +1,8 @@
 import smtplib
-import dbModels as db
+from Controllers import dbModels as db
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from dbModels import Session
+from Controllers.dbModels import Session
 import json
 import datetime as dt
 import bcrypt
@@ -40,7 +40,7 @@ def del_vm(vm_obj):
 
 
 # Session Management
-def verify_session(username, password):
+def verify_user(username, password):
     for user in gateway_ses.query(db.dbUser):
         if user.studentID == username and bcrypt.checkpw(password.encode('utf-8'), user.password):
             return True

@@ -1,5 +1,5 @@
 import tkinter as tk
-import Gateway as gt
+from Controllers import Controller as gt
 import webbrowser
 from tkinter import messagebox
 
