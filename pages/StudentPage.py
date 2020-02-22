@@ -110,6 +110,8 @@ class StudentPage(tk.Frame):
             time.sleep(1)
 
     def start_check(self):
+        messagebox.showinfo("Warning", "This process may take a while. A Fortnite match should be about right.",
+                            parent=self)
         self.check.start()
         self.display.start()
 

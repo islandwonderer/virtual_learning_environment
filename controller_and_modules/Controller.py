@@ -1,21 +1,18 @@
-import smtplib
-from controller_and_modules import dbModels as dB
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from controller_and_modules.dbModels import Session
+# Imported Packages
 import json
 import datetime as dt
 import bcrypt
 import time
 
+# Local Imports
+from controller_and_modules import DatabaseModule as dB
+from controller_and_modules.DatabaseModule import Session
+from controller_and_modules.EmailModule import EmailModule as eM
+
+
 # Setup
-default_password = ""
-default_address = ""
-default_smtp = ""
-default_port = ""
-
 gateway_ses = Session()
-
+mail_it = eM()
 config_file = "controller_and_modules/config.json"
 
 
@@ -116,33 +113,8 @@ def del_user(user):
     gateway_ses.commit()
 
 
-def load_email_info():
-    global default_address, default_password, default_smtp, default_port
-    config = load_config()
-    default_address = config["email"]
-    default_password = config["e_password"]
-    default_smtp = config["smtp"]
-    default_port = config["port"]
-
-
 def notify_user(user, message, subject):
-    load_email_info()
-    e_mail = smtplib.SMTP(host=default_smtp, port=default_port)
-    msg = MIMEMultipart()
-    msg['From'] = default_address
-    msg['To'] = user.eMail
-    msg['Subject'] = subject
-    msg.attach(MIMEText(message, 'plain'))
-    e_mail.connect(default_smtp, default_port)
-    e_mail.ehlo()
-    e_mail.starttls()
-    e_mail.ehlo()
-    try:
-        e_mail.login(default_address, default_password)
-        e_mail.send_message(msg)
-    except smtplib.SMTPAuthenticationError:
-        e_mail.quit()
-        return False
-    e_mail.quit()
-    del msg
-    return True
+    config = load_config()
+    email_address = user.eMail
+    result = mail_it.send_mail(email_address, message, subject, config)
+    return result

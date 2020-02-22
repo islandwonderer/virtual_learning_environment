@@ -1,5 +1,5 @@
 import unittest
-from controller_and_modules import Controller as cT, dbModels as dB
+from controller_and_modules import Controller as cT, DatabaseModule as dB
 
 
 class GatewayTestCases(unittest.TestCase):

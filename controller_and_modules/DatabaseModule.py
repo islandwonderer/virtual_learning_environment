@@ -1,4 +1,7 @@
 # This file contains the objects to be used in conjunction with SQLAlchemy
+# Separating this file into so that the cloud computing elements are in their own module would allow
+# for a more loosely coupled architecture.
+
 import string
 import random
 import boto3
