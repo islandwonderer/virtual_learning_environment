@@ -3,7 +3,7 @@
 ## Introduction
 This prototype project allows a teacher to deploy and manage a 
 cloud of AWS virtual machines for use within a teaching environment. 
-The instructor may add users in bulk or one at the time. 
+The instructor may add users in bulk or one at a time. 
 Adding a user to the software creates an AWS EC2 instance and 
 notifies the student via email about their login information.
  
@@ -29,21 +29,21 @@ improvements to the code and program.
 ![Teacher interface with 3 major sections](https://i.imgur.com/3k6cxSU.png)
 
 1. Management Area
-    * VMs- This section allows the teacher to perform several task on AWS instances such as:
+    * VMs- This section allows the teacher to perform several tasks on AWS instances such as:
         * Turn ALL On or Off
-        * Check Status of Individual VMs
-        * Download Visitor Logs
-    * Users- This section allows teacher to modify a user's information including:
-        * Change Personal Information
-        * Change Password
-        * Suspend and Enable Accounts
-        * Visit Student's VM
-    * Settings- This section allows teacher to save settings for:
-        * Email Communication
-        * VM Creation Parameters Such as AMI and Security Groups
+        * Check status of individual VMs
+        * Download visitor logs
+    * Users- This section allows the teacher to modify a user's information including:
+        * Change personal information
+        * Change password
+        * Suspend and enable accounts
+        * Visit student's VM
+    * Settings- This section allows the teacher to save settings for:
+        * Email communication
+        * VM creation parameters such as AMI and security groups
 2. Single User Creation
-    * This section allows the teacher to add a single user by provideing the following information:
-        * Student ID - Must Be An Unique Integer
+    * This section allows the teacher to add a single user by providing the following information:
+        * Student ID - Must be a unique integer
         * EMail - Need to notify student of credentialing information
         * First Name
         * Last Name
@@ -56,15 +56,15 @@ improvements to the code and program.
 ![Overview image of the student interface](https://i.imgur.com/HVD4zt6.png)
 
 1. VM Control
-    * This section allow the student to:
-        * Start and Stop Their Assigned VM
-        * Monitor The Starting Progress
+    * This section allows the student to:
+        * Start and stop their assigned VM
+        * Monitor the starting progress
     * The student is notified when the connection is completed.
 2. Links
     * Once the VM is up, this section provides the student with links to access the VM.
     * Links reflect the latest VM configuration.
 3. Other Class VMs
-    * This section allows a student to visit a classmates VM.
+    * This section allows a student to visit a classmate's VM.
     * Access to other VM's is limited to the front facing web page.
     * Visits to other VM's are logged in the DB and host computer.
     
@@ -86,7 +86,7 @@ Instructions on setting this up can be found
 
 ### Database
 A sample database has been included for the purpose of software testing and evaluation. 
-Included in the database these two sample users:
+Included in the database are these two sample users:
 * Teacher
     * User ID: 1234567
     * Password: TestPass
@@ -101,10 +101,10 @@ folder for the software to work properly.
 
 ### Contributing
 As explained in the introductions this software is only a proof of concept. We (royal) 
-welcome contributions that take this from a proof of concept to a full featured solutions
+welcome contributions that take this from a proof of concept to a full featured solution
 for educational VM management. 
 
-Please just follow the following simple guidelines:
+Please just follow the simple guidelines:
 
 * When contributing to this repository, please first discuss the change you wish to make 
 via issue, email, or any other method with the owners of this repository before making 
