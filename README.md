@@ -20,7 +20,7 @@ Note that this project is a proof of concept.
 Ideally, this project would be web-based. A web-hosted application
 would allow a student to connect to their virtual learning 
 environment from any device without needing to download or install
-any software. Please read the recorded issue in Github for a more
+any software. Please read the recorded issues in Github for a more
 comprehensive list of further
 improvements to the code and program.
 
